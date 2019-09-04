@@ -3,7 +3,7 @@
 Steps to see this example working:
 
 * Change to the example directory (`cd /path/to/client-authenticated-https/example`)
-* Install dependencies (`npm i`)
+* Install dependencies (`npm install`)
 * Generate the server key: `npx client-authenticated-https create-key --server --keydir cahkeys`
 * Generate the client key: `npx client-authenticated-https create-key`
 * In one terminal instance, run the server `npm run serve`

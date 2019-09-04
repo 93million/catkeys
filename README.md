@@ -1,3 +1,5 @@
+<div align="center"><img src="readme/images/93million_logo.svg" alt="93 Million logo" height="65" /></div>
+
 # Client Authenticated HTTPS
 
 *HTTPS communication authenticated using client as well as server SSL certificates*
@@ -8,11 +10,13 @@ Generate keys for both the server and the clients for encryption and authenticat
 
 This library is open source under the MIT license and has good coverage with unit tests. Please feel free to contribute over on GitHub.
 
-## Setting up keys
+## Getting started
+
+### Setting up keys
 
 Create a directory named `cahkeys` to hold server and client keys. A good place to put this directory is in your project root directory.
 
-### Generating a server key
+#### Generating a server key
 
 There can be only 1 server key. Generate the server key using the command:
 
@@ -32,17 +36,17 @@ drwxr-xr-x  9 tom  staff   288  4 Sep 21:48 ..
 -rw-r--r--  1 tom  staff  7857  4 Sep 21:09 server.cahkey
 ```
 
-### Generating client keys
+#### Generating client keys
 
-There can be as many client keys as you require. Generate a client key using the command:
+Generate a client key using the command:
 
 ```
 npx client-authenticated-https create-key --keydir /path/to/cahkeys --name client
 ```
 
-If you omit `--keydir` it will search for the directory `cahkeys` by progressing back through the directory tree from the `client-authenticated-https` directory inside the `node_modules`. If you placed `cahkeys` in your project root directory it should be found automatically if you can omit `--keydir`
+There can be as many client keys as you require.
 
-If you omit `--name` the default name '`client`' will be used. It is not required that the value `<client-name>` passed to `--name` matches any of the network credentials of the client to establish a connection.
+If you omit `--name` the default name '`client`' will be used. Unlike the server key, it is not required that the value `<client-name>` passed to `--name` matches any of the network credentials of the client to establish a connection.
 
 **NB: The server key is effectively the master key. All client keys are generated from the server key. If you regenerate the server key you will need to regenerate all the client keys!!! For this reason it may be worth making a secure backup of the server key.**
 
@@ -59,7 +63,7 @@ drwxr-xr-x  9 tom  staff   288  4 Sep 21:48 ..
 
 You can generate as many client keys as you wish, however if you have more than 1 you will need to specify which to use when making a request.
 
-## API
+### Using the library
 
 The API extends Node's `https` with 2 methods overridden: `.request()` and `.createServer()`. Both these methods have the same signature as they do in the `https` library, however an important difference is that they are `async` methods.
 
@@ -68,9 +72,7 @@ See the node documentation for information about how to use these methods:
 * https://nodejs.org/api/https.html#https_https_request_options_callback
 * https://nodejs.org/api/https.html#https_https_createserver_options_requestlistener
 
-## Example code
-
-### Example server
+#### Creating a server
 
 Let's review migrating a server written using `https` to use `clientAuthenticatedKeys`:
 
@@ -109,9 +111,16 @@ exports = async () => {
 }
 ```
 
-### Example client
+#### Making a request
 
-Let's review migrating a client request written using `https` to use `clientAuthenticatedKeys`:
+Let's review migrating a client making a request using `https` to use `clientAuthenticatedKeys`.
+
+First, the client key must be installed on the client:
+
+* Create a directory in your project root named `cahkeys`
+* Copy the file `client.cahkey` you created from the server into this directory
+
+*If you want to place the `cahkeys` directory in another location, [use an env var](#specifying-a-custom-cahkeys-directory)*
 
 ```javascript
 const https = require('https')
@@ -119,7 +128,7 @@ const https = require('https')
 exports = () => {
   const req = https.request(
     {
-      url: 'https://localhost/',
+      url: 'https://secure.example.com/',
       …
     },
     (res) => { … }
@@ -143,7 +152,7 @@ const clientAuthenticatedHttps = require('client-authenticated-https')
 exports = async () => {
   const req = await clientAuthenticatedHttps.request(
     {
-      url: 'https://localhost/',
+      url: 'https://secure.example.com/',
       cahkey: 'my-special-key',
       …
     },
@@ -155,10 +164,25 @@ exports = async () => {
 }
 ```
 
-### Further examples
+## Examples
 
 Look in `./example/` for a working example of a server and client
 
 ## Specifying a custom `cahkeys` directory
 
-The `cahkeys` directory is located by prgressing back through the filesystem from the `client-authenticated-https` directory until a `cahkeys` directory is found. You can specify a directory at an alternative location by supplying a path to the directory in the env var `CAH_KEY_DIR`.
+The `cahkeys` directory is located automatically by prgressing up through the filesystem tree from the `client-authenticated-https` directory until a `cahkeys` directory is found in a paretn directory. You can explicitly specify a directory at an alternative location by supplying a path in the env var `CAH_KEY_DIR`.
+
+## Tests
+
+```
+npm install
+npm test
+```
+
+## License and copyright
+
+All logos, images and artwork are copyright 2019 93 Million Ltd. and used by permission for this project only.
+
+All code is released under the [MIT](LICENSE) license
+
+*Copyright 93 Million Ltd. All rights reserved*

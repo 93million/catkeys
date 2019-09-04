@@ -1,0 +1,16 @@
+{
+  "name": "cah-demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "httpsServer.js",
+  "dependencies": {
+    "client-authenticated-https": "^1.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "request": "node request.js",
+    "serve": "node serve.js"
+  },
+  "author": "",
+  "license": "ISC"
+}

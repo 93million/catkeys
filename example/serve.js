@@ -1,5 +1,4 @@
 const clientAuthenticatedHttps = require('client-authenticated-https')
-const fs = require('fs')
 
 const serve = async () => {
   (await clientAuthenticatedHttps.createServer(

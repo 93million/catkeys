@@ -1,6 +1,6 @@
 {
   "name": "client-authenticated-https",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "bin": "./cli.js",
   "description": "HTTPS communication authenticated using client as well as server SSL certificates",
   "main": "clientAuthenticatedHttps.js",
@@ -20,8 +20,7 @@
   "author": "93million",
   "license": "MIT",
   "dependencies": {
-    "rimraf": "^2.6.3",
-    "tar": "^4.4.10",
+    "tar-stream": "^2.1.0",
     "yargs": "^14.0.0"
   },
   "devDependencies": {

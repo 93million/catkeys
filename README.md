@@ -1,4 +1,4 @@
-<div align="right"><img src="readme/images/93million_logo.svg" alt="93 Million logo" height="48" /></div>
+<div style="float:right"><img src="readme/images/93million_logo.svg" alt="93 Million logo" height="48" /></div>
 
 # Client Authenticated HTTPS
 

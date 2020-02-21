@@ -5,10 +5,17 @@ const getCAHKeyPath = require('./lib/getCAHKeyPath')
 const clientAuthenticatedHttps = {
   ...https,
   async createServer (a1, a2) {
-    const keyPath = await getCAHKeyPath('server')
+    const { cahKeysDir, ...receivedOptions } = (typeof a1 === 'object')
+      ? a1
+      : {}
+    const keyPath = await getCAHKeyPath('server', { cahKeysDir })
     const keyOptions = await loadKey(keyPath)
-
-    const options = { ...keyOptions, requestCert: true, rejectUnauthorized: true }
+    const options = {
+      ...receivedOptions,
+      ...keyOptions,
+      requestCert: true,
+      rejectUnauthorized: true
+    }
 
     return https.createServer(
       (typeof a1 === 'object') ? { ...a1, ...options } : options,
@@ -19,14 +26,12 @@ const clientAuthenticatedHttps = {
     return this.request(a1, a2, a3, { method: 'GET' })
   },
   async request (a1, a2, a3, optionOverrides = {}) {
-    const { cahKey, ...receivedOptions } = (typeof a1 === 'object')
+    const { cahKey, cahKeysDir, ...receivedOptions } = (typeof a1 === 'object')
       ? a1
       : (typeof a2 === 'object') ? a2 : {}
     const callback = (typeof a2 === 'function') ? a2 : a3
-
-    const keyPath = await getCAHKeyPath(cahKey)
+    const keyPath = await getCAHKeyPath(cahKey, { cahKeysDir })
     const keyOptions = await loadKey(keyPath)
-
     const options = {
       ...receivedOptions,
       ...keyOptions,

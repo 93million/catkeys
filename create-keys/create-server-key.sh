@@ -29,7 +29,7 @@ mkdir -p "$KEYDIR"
 openssl req -new -x509 -days 9999 -config "$DIR/cnf/ca.cnf" -keyout "$KEYDIR/ca-key.pem" -out "$KEYDIR/ca-crt.pem" -nodes 2> /dev/null
 openssl genrsa -out "$KEYDIR/key.pem" 4096 2> /dev/null
 openssl req -new -subj "/C=GB/ST=Tyne and Wear/L=Newcastle upon Tyne/O=clientAuthenticatedHttps/OU=clientAuthenticatedHttps/CN=$COMMON_NAME" -key "$KEYDIR/key.pem" -out "$KEYDIR/csr.pem" 2> /dev/null
-openssl x509 -req -days 999 -in "$KEYDIR/csr.pem" -CA "$KEYDIR/ca-crt.pem" -CAkey "$KEYDIR/ca-key.pem" -CAcreateserial -CAserial "$KEYDIR/.srl" -out "$KEYDIR/crt.pem" 2> /dev/null
+openssl x509 -req -days 9999 -in "$KEYDIR/csr.pem" -CA "$KEYDIR/ca-crt.pem" -CAkey "$KEYDIR/ca-key.pem" -CAcreateserial -CAserial "$KEYDIR/.srl" -out "$KEYDIR/crt.pem" 2> /dev/null
 
 tar -czf "$KEYDIR/server.cahkey" -C "$KEYDIR" "ca-crt.pem" "ca-key.pem" "crt.pem" "key.pem" ".srl"
 

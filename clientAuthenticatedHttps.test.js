@@ -3,6 +3,7 @@
 const clientAuthenticatedHttps = require('./clientAuthenticatedHttps')
 const https = require('https')
 const loadKey = require('./lib/loadKey')
+const getCAHKeyPath = require('./lib/getCAHKeyPath')
 
 jest.mock('https')
 jest.mock('./lib/loadKey')
@@ -19,7 +20,7 @@ loadKey.mockReturnValue(Promise.resolve(mockLoadKeyObj))
 describe(
   'clientAuthenticatedHttps.createServer()',
   () => {
-    const opts = { port: 1234 }
+    const opts = { port: 1234, cahKeysDir: '/path/to/cahkeys' }
     const handler = () => {}
 
     https.createServer.mockImplementation = () => {}
@@ -75,6 +76,16 @@ describe(
           },
           handler
         )
+      }
+    )
+
+    test(
+      'should call getCAHKeyPath with cahKeysDir when present',
+      async () => {
+        await clientAuthenticatedHttps.createServer(opts, handler)
+
+        expect(getCAHKeyPath)
+          .toBeCalledWith('server', { cahKeysDir: opts.cahKeysDir })
       }
     )
   }
@@ -155,6 +166,16 @@ describe(
           { ...mockLoadKeyObj, ...opts, method: 'GET' },
           callback
         )
+      }
+    )
+
+    test(
+      'should call getCAHKeyPath with cahKeysDir when present in opts',
+      async () => {
+        await clientAuthenticatedHttps.get(url, opts, callback)
+
+        expect(getCAHKeyPath)
+          .toBeCalledWith(opts.cahKey, { cahKeysDir: opts.cahKeysDir })
       }
     )
   }

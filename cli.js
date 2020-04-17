@@ -25,7 +25,8 @@ const main = async () => {
         keydir: {
           alias: 'k',
           default: await locateKeysDir(),
-          description: 'path to cahkeys directory (will locate closest if none provided)',
+          description:
+            'path to cahkeys directory (will locate closest if none provided)',
           required: true
         }
       },

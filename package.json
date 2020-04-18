@@ -1,6 +1,6 @@
 {
   "name": "client-authenticated-https",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "bin": "./cli.js",
   "description": "HTTPS communication authenticated using client as well as server SSL certificates",
   "main": "clientAuthenticatedHttps.js",
@@ -9,6 +9,7 @@
   },
   "scripts": {
     "lint": "eslint .",
+    "sit": "jest -c sit/jest.config.js --rootDir sit",
     "test": "jest --coverage"
   },
   "keywords": [
@@ -20,6 +21,7 @@
   "author": "93million",
   "license": "MIT",
   "dependencies": {
+    "fs-extra": "^9.0.0",
     "tar-stream": "^2.1.0",
     "yargs": "^14.0.0"
   },

@@ -4,7 +4,7 @@
   "description": "",
   "main": "httpsServer.js",
   "dependencies": {
-    "client-authenticated-https": "^1.0.0"
+    "client-authenticated-https": ".."
   },
   "devDependencies": {},
   "scripts": {

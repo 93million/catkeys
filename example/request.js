@@ -1,6 +1,4 @@
-// in your own project you should use:
-//     const clientAuthenticatedHttps = require('client-authenticated-https')
-const clientAuthenticatedHttps = require('..')
+const clientAuthenticatedHttps = require('client-authenticated-https')
 
 const request = async () => {
   const postData = 'Dibber Dobber!!! Bimble Bomble!!!'

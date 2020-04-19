@@ -16,6 +16,7 @@ module.exports = async () => {
   await fse.emptyDir(testDir)
   await execFile(cliCmd, ['create-key', '--server', '--keydir', testCahkeysDir])
   await execFile(cliCmd, ['create-key', '--keydir', testCahkeysDir])
+  await execFile('npm', ['install'], { cwd: exampleDir, env: process.env })
 
   const serveProcess = childProcess.execFile(
     'node',

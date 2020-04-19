@@ -9,8 +9,9 @@
   },
   "scripts": {
     "lint": "eslint .",
-    "sit": "jest -c sit/jest.config.js --rootDir sit",
-    "test": "jest --coverage"
+    "test": "jest --coverage",
+    "test:sit": "jest -c jest.config.sit.js",
+    "test:unit": "jest -c jest.config.unit.js"
   },
   "keywords": [
     "HTTPS",

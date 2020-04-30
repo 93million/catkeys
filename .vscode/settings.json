@@ -1,0 +1,4 @@
+{
+    "editor.rulers": [80],
+    "jest.pathToConfig": "jest.config.unit.js"
+}

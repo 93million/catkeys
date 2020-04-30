@@ -1,0 +1,54 @@
+{
+  "name": "client-authenticated-https",
+  "version": "1.0.0-beta.1",
+  "bin": "./cli.js",
+  "description": "HTTPS communication authenticated using client as well as server SSL certificates",
+  "main": "clientAuthenticatedHttps.js",
+  "repository": "https://github.com/93million/client-authenticated-https",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "test": "jest --coverage",
+    "test:sit": "jest -c jest.config.sit.js",
+    "test:unit": "jest -c jest.config.unit.js"
+  },
+  "keywords": [
+    "HTTPS",
+    "client certificates",
+    "SSL",
+    "TLS"
+  ],
+  "author": "93million",
+  "license": "MIT",
+  "dependencies": {
+    "fs-extra": "^9.0.0",
+    "tar-stream": "^2.1.0",
+    "yargs": "^14.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.1.0",
+    "eslint-config-standard": "^13.0.1",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "husky": "^3.0.3",
+    "jest": "^24.8.0",
+    "lint-staged": "^9.2.1"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "npm run lint"
+    ]
+  }
+}

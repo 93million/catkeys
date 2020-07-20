@@ -1,6 +1,6 @@
 {
   "name": "client-authenticated-https",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.1-beta.0",
   "bin": "./cli.js",
   "description": "HTTPS communication authenticated using client as well as server SSL certificates",
   "main": "clientAuthenticatedHttps.js",

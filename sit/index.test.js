@@ -57,7 +57,6 @@ describe(
 
               expect(stdout)
                 .toBe('Data received: Dibber Dobber!!! Bimble Bomble!!!\n')
-              expect(stderr).toBe('')
               resolve()
             }
           )

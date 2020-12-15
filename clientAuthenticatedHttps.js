@@ -1,6 +1,7 @@
 const https = require('https')
 const loadKey = require('./lib/loadKey')
 const getCAHKeyPath = require('./lib/getCAHKeyPath')
+const checkServerIdentity = require('./lib/checkServerIdentity')
 
 const clientAuthenticatedHttps = {
   ...https,
@@ -26,7 +27,12 @@ const clientAuthenticatedHttps = {
     return this.request(a1, a2, a3, { method: 'GET' })
   },
   async request (a1, a2, a3, optionOverrides = {}) {
-    const { cahKey, cahKeysDir, ...receivedOptions } = (typeof a1 === 'object')
+    const {
+      cahKey,
+      cahKeysDir,
+      cahIgnoreMismatchedHostName,
+      ...receivedOptions
+    } = (typeof a1 === 'object')
       ? a1
       : (typeof a2 === 'object') ? a2 : {}
     const callback = (typeof a2 === 'function') ? a2 : a3
@@ -35,7 +41,16 @@ const clientAuthenticatedHttps = {
     const options = {
       ...receivedOptions,
       ...keyOptions,
-      ...optionOverrides
+      ...optionOverrides,
+      agent: new https.Agent({
+        checkServerIdentity: (host, cert) => {
+          return checkServerIdentity(
+            host,
+            cert,
+            { cahIgnoreMismatchedHostName }
+          )
+        }
+      })
     }
 
     return (typeof a1 === 'string')

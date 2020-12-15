@@ -42,7 +42,9 @@ npx client-authenticated-https create-key --server --keydir /path/to/cahkeys --n
 
 There can be only 1 server key. Running the command again will overwrite any existing server keys.
 
-The value `<server-hostname>` passed to `--name` must match the host name the clients will use to connect to the server or a connection will not be established. Currently, `<server-hostname>` can only be a single, fixed hostname. Wildcards or alternative names are not currently supported. If you omit `--name` the default name '`localhost`' will be used.
+The value `<server-hostname>` passed to `--name` must noramlly match the host name the clients will use to connect to the server or a connection will not be established. Currently, `<server-hostname>` can only be a single, fixed hostname. Wildcards or alternative names are not currently supported. If you omit `--name` the default name '`localhost`' will be used.
+
+Passing the option `{ cahIgnoreMismatchedHostName: true }` when calling `request()` or `get()` will ignore any mismatch with the host name of the server. Using this option does not invalidate security as the client continues to validate the server using the certificate authority in the client cahkey, just as the server validates the client using the certificate authority in the server key.
 
 Take a look in your `cahkeys` directory - you will now see `server.cahkey`
 

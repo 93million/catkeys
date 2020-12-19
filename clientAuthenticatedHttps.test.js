@@ -4,14 +4,16 @@ const clientAuthenticatedHttps = require('./clientAuthenticatedHttps')
 const https = require('https')
 const loadKey = require('./lib/loadKey')
 const getCAHKeyPath = require('./lib/getCAHKeyPath')
+const checkServerIdentity = require('./lib/checkServerIdentity')
 
 jest.mock('https')
 jest.mock('./lib/loadKey')
 jest.mock('./lib/getCAHKeyPath')
+jest.mock('./lib/checkServerIdentity')
 
 const mockLoadKeyObj = {
-  ca: '/path/test/ca-cert.pem',
-  cert: '/path/test/cert.pem',
+  ca: '/path/test/ca-crt.pem',
+  cert: '/path/test/crt.pem',
   key: '/path/test/key.pem'
 }
 
@@ -109,7 +111,11 @@ describe(
       async () => {
         await clientAuthenticatedHttps.request(url)
 
-        expect(https.request).toBeCalledWith(url, mockLoadKeyObj, undefined)
+        expect(https.request).toBeCalledWith(
+          url,
+          { ...mockLoadKeyObj, agent: expect.any(https.Agent) },
+          undefined
+        )
       }
     )
     test(
@@ -117,8 +123,10 @@ describe(
       async () => {
         await clientAuthenticatedHttps.request(opts)
 
-        expect(https.request)
-          .toBeCalledWith({ ...mockLoadKeyObj, ...opts }, undefined)
+        expect(https.request).toBeCalledWith(
+          { ...mockLoadKeyObj, agent: expect.any(https.Agent), ...opts },
+          undefined
+        )
       }
     )
     test(
@@ -126,8 +134,11 @@ describe(
       async () => {
         await clientAuthenticatedHttps.request(url, opts)
 
-        expect(https.request)
-          .toBeCalledWith(url, { ...mockLoadKeyObj, ...opts }, undefined)
+        expect(https.request).toBeCalledWith(
+          url,
+          { ...mockLoadKeyObj, agent: expect.any(https.Agent), ...opts },
+          undefined
+        )
       }
     )
     test(
@@ -135,7 +146,11 @@ describe(
       async () => {
         await clientAuthenticatedHttps.request(url, callback)
 
-        expect(https.request).toBeCalledWith(url, mockLoadKeyObj, callback)
+        expect(https.request).toBeCalledWith(
+          url,
+          { ...mockLoadKeyObj, agent: expect.any(https.Agent) },
+          callback
+        )
       }
     )
     test(
@@ -143,8 +158,10 @@ describe(
       async () => {
         await clientAuthenticatedHttps.request(opts, callback)
 
-        expect(https.request)
-          .toBeCalledWith({ ...mockLoadKeyObj, ...opts }, callback)
+        expect(https.request).toBeCalledWith(
+          { ...mockLoadKeyObj, agent: expect.any(https.Agent), ...opts },
+          callback
+        )
       }
     )
     test(
@@ -152,8 +169,11 @@ describe(
       async () => {
         await clientAuthenticatedHttps.request(url, opts, callback)
 
-        expect(https.request)
-          .toBeCalledWith(url, { ...mockLoadKeyObj, ...opts }, callback)
+        expect(https.request).toBeCalledWith(
+          url,
+          { ...mockLoadKeyObj, agent: expect.any(https.Agent), ...opts },
+          callback
+        )
       }
     )
     test(
@@ -163,7 +183,12 @@ describe(
 
         expect(https.request).toBeCalledWith(
           url,
-          { ...mockLoadKeyObj, ...opts, method: 'GET' },
+          {
+            ...mockLoadKeyObj,
+            agent: expect.any(https.Agent),
+            ...opts,
+            method: 'GET'
+          },
           callback
         )
       }
@@ -176,6 +201,27 @@ describe(
 
         expect(getCAHKeyPath)
           .toBeCalledWith(opts.cahKey, { cahKeysDir: opts.cahKeysDir })
+      }
+    )
+
+    test(
+      'it should pass cahIgnoreMismatchedHostName to checkServerIdentity()',
+      async () => {
+        https.Agent.mockImplementationOnce(({ checkServerIdentity }) => {
+          checkServerIdentity('localhost', {})
+        })
+
+        await clientAuthenticatedHttps.get(
+          url,
+          { ...opts, cahIgnoreMismatchedHostName: true },
+          callback
+        )
+
+        expect(checkServerIdentity).toBeCalledWith(
+          expect.any(String),
+          expect.any(Object),
+          { cahIgnoreMismatchedHostName: true }
+        )
       }
     )
   }

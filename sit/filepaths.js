@@ -1,13 +1,18 @@
 const path = require('path')
 
-const cliCmd = path.resolve(__dirname, '..', 'cli.js')
-const exampleDir = path.resolve(__dirname, '..', 'example')
-const testDir = path.resolve(__dirname, 'test')
+const sitDir = path.resolve(__dirname)
+const cliCmd = path.resolve(sitDir, '..', 'cli.js')
+const binDir = path.resolve(sitDir, 'bin')
+const testDir = path.resolve(sitDir, 'test')
 const testCahkeysDir = path.resolve(testDir, 'cahkeys')
+const testCahkeysDir2 = path.resolve(testDir, 'cahkeys2')
+const testSSLKeysDir = path.resolve(testDir, 'ssl')
 
 module.exports = {
+  binDir,
   cliCmd,
-  exampleDir,
   testDir,
-  testCahkeysDir
+  testCahkeysDir,
+  testCahkeysDir2,
+  testSSLKeysDir
 }

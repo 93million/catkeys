@@ -1,12 +1,13 @@
 {
   "name": "client-authenticated-https",
-  "version": "1.0.2-beta.0",
+  "version": "1.1.0",
   "bin": "./cli.js",
-  "description": "HTTPS communication authenticated using client as well as server SSL certificates",
+  "description": "Secure HTTPS communication authenticated using client-side SSL certificates",
   "main": "clientAuthenticatedHttps.js",
   "repository": "https://github.com/93million/client-authenticated-https",
   "directories": {
-    "lib": "lib"
+    "bin": "./bin",
+    "lib": "./lib"
   },
   "scripts": {
     "lint": "eslint .",
@@ -17,6 +18,8 @@
   "keywords": [
     "HTTPS",
     "client certificates",
+    "client-side SSL certificates",
+    "security",
     "SSL",
     "TLS"
   ],
@@ -35,7 +38,7 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.0",
     "husky": "^3.0.3",
-    "jest": "^24.8.0",
+    "jest": "^26.6.3",
     "lint-staged": "^9.2.1"
   },
   "jest": {

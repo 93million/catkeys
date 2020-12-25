@@ -19,6 +19,10 @@ const request = async () => {
       res.on('end', () => {
         console.log(data.join(''))
       })
+
+      res.on('error', (message) => {
+        console.error(message)
+      })
     }
   )
 

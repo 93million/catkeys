@@ -2,6 +2,7 @@ const clientAuthenticatedHttps = require('client-authenticated-https')
 
 const serve = async () => {
   (await clientAuthenticatedHttps.createServer(
+    { cahCheckKeyExists: true },
     (req, res) => {
       const data = []
 

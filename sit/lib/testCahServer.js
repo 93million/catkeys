@@ -1,9 +1,7 @@
 const clientAuthenticatedHttps = require('../../clientAuthenticatedHttps')
 
-let srv
-
-const start = async (options = {}) => {
-  srv = await clientAuthenticatedHttps.createServer(
+module.exports = async ({ port = 45231, ...options } = {}) => {
+  const srv = await clientAuthenticatedHttps.createServer(
     options,
     (req, res) => {
       const data = []
@@ -18,11 +16,9 @@ const start = async (options = {}) => {
     }
   )
 
-  srv.listen(45231)
-}
+  srv.listen(port)
 
-const stop = () => {
-  srv.close()
+  return () => {
+    srv.close()
+  }
 }
-
-module.exports = { start, stop }

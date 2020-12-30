@@ -1,0 +1,15 @@
+{
+  "name": "client-authenticated-https-perf",
+  "version": "1.0.0",
+  "description": "",
+  "main": "perf.js",
+  "scripts": {
+    "start": "node perf.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "benchmark": "^2.1.4"
+  }
+}

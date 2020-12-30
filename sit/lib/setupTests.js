@@ -1,14 +1,8 @@
 const { promisify } = require('util')
 const childProcess = require('child_process')
 const fse = require('fs-extra')
-const {
-  start: startCahServer,
-  stop: stopCahServer
-} = require('./testCahServer')
-const {
-  start: startHttpServer,
-  stop: stopHttpsServer
-} = require('./testHttpsServer')
+const startCahServer = require('./testCahServer')
+const startHttpServer = require('./testHttpsServer')
 const path = require('path')
 const fs = require('fs')
 
@@ -33,22 +27,27 @@ module.exports = async () => {
     ['create-key', '--server', '--keydir', testCahkeysDir2]
   )
   await execFile(cliCmd, ['create-key', '--keydir', testCahkeysDir2])
-  await startCahServer({ cahKeysDir: testCahkeysDir })
+  const stopServers = []
+  stopServers.push(await startCahServer({ cahKeysDir: testCahkeysDir }))
+  stopServers.push(await startCahServer({
+    cahCheckKeyExists: true,
+    cahKeysDir: testCahkeysDir,
+    port: 45230
+  }))
   await execFile(
     path.resolve(binDir, 'create-https-cert.sh'),
     ['-k', testSSLKeysDir, '-n', 'localhost']
   )
-  startHttpServer({
+  stopServers.push(startHttpServer({
     ca: await readFile(path.resolve(testSSLKeysDir, 'ca-crt.pem')),
     cert: await readFile(path.resolve(testSSLKeysDir, 'crt.pem')),
     key: await readFile(path.resolve(testSSLKeysDir, 'key.pem'))
-  })
+  }))
 
   return {
     cleanup: async () => {
       await fse.emptyDir(testDir)
-      stopCahServer()
-      stopHttpsServer()
+      stopServers.forEach((stop) => stop())
     }
   }
 }

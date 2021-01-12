@@ -1,12 +1,11 @@
 #! /usr/bin/env node
 
-const childProcess = require('child_process')
-const path = require('path')
 const locateKeysDir = require('./lib/locateKeysDir')
+const createKey = require('./lib/createKey')
 const yargs = require('yargs')
 
 const main = async () => {
-  // eslint-disable-next-line
+  // eslint-disable-next-line no-unused-expressions
   yargs
     .command(
       'create-key',
@@ -30,26 +29,16 @@ const main = async () => {
           required: true
         }
       },
-      (argv) => {
-        const name = argv.name || (argv.server ? 'localhost' : 'client')
-        const scriptPath = path.resolve(
-          __dirname,
-          'create-keys',
-          (argv.server === true)
-            ? 'create-server-key.sh'
-            : 'create-client-key.sh'
-        )
-        const scriptArgs = ['-n', name, '-k', argv.keydir]
-
-        childProcess.execFile(scriptPath, scriptArgs, (err, stdout, stderr) => {
-          if (err) {
-            console.error(err)
-          }
-
-          if (stderr) {
-            console.error(stderr)
-          }
-        })
+      async (argv) => {
+        try {
+          await createKey({
+            server: argv.server,
+            keydir: argv.keydir,
+            commonName: argv.name || (argv.server ? 'localhost' : 'client')
+          })
+        } catch (e) {
+          console.error('Failed to create key', e)
+        }
       }
     )
     .argv

@@ -9,7 +9,13 @@ const testRequest = require('./lib/testRequest')
 
 let setup
 
-beforeAll(async () => { setup = await setupTests() })
+beforeAll(async () => {
+  try {
+    setup = await setupTests()
+  } catch (e) {
+    console.error(e)
+  }
+})
 afterAll(async () => setup.cleanup())
 
 describe(
@@ -83,6 +89,7 @@ describe(
     )
 
     test(
+      // eslint-disable-next-line max-len
       'should connect using a valid cahkey to an mismatched hostname using `cahIgnoreMismatchedHostName: true`',
       async () => {
         await expect(testRequest({
@@ -95,6 +102,7 @@ describe(
     )
 
     test(
+      // eslint-disable-next-line max-len
       'should refuse to connect to server when hostname doesn\'t match cert alt name',
       async () => {
         await expect(testRequest({ hostname: '127.0.0.1' }))
@@ -116,6 +124,7 @@ describe(
     )
 
     test(
+      // eslint-disable-next-line max-len
       'should refuse to connect to HTTPS servers with certs signed by supported CAs',
       async () => {
         await expect(testRequest({

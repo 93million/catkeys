@@ -32,6 +32,49 @@
           "windows": {
             "program": "${workspaceFolder}/node_modules/jest/bin/jest",
           }
+        },
+        {
+          "type": "node",
+          "request": "launch",
+          "name": "Create server key",
+          "args": [
+            "${workspaceFolder}/cli.js",
+            "create-key",
+            "--server",
+            "-n",
+            "localhost",
+            "-k",
+            "${workspaceFolder}/cahkeys"
+          ],
+          "console": "integratedTerminal",
+          "internalConsoleOptions": "neverOpen",
+          "disableOptimisticBPs": true,
+          "windows": {
+            "env": {
+              "PATH": "C:\\ProgramData\\chocolatey\\bin;"
+            }
+          }
+        },
+        {
+          "type": "node",
+          "request": "launch",
+          "name": "Create client key",
+          "args": [
+            "${workspaceFolder}/cli.js",
+            "create-key",
+            "-n",
+            "client",
+            "-k",
+            "${workspaceFolder}/cahkeys"
+          ],
+          "console": "integratedTerminal",
+          "internalConsoleOptions": "neverOpen",
+          "disableOptimisticBPs": true,
+          "windows": {
+            "env": {
+              "PATH": "C:\\ProgramData\\chocolatey\\bin;"
+            }
+          }
         }
     ]
 }

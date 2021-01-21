@@ -1,4 +1,4 @@
-const clientAuthenticatedHttps = require('..')
+const { https: cahHttps } = require('..')
 const Benchmark = require('benchmark')
 const setupTests = require('../sit/lib/setupTests')
 const https = require('https')
@@ -27,7 +27,7 @@ const main = async () => {
     .add('cah#request', {
       defer: true,
       fn: async (deferred) => {
-        const req = await clientAuthenticatedHttps.request(
+        const req = await cahHttps.request(
           { cahKeysDir: testCahkeysDir, port: 45231 },
           (res) => { deferred.resolve() }
         )
@@ -38,7 +38,7 @@ const main = async () => {
     .add('cah#request-cahCheckKeyExists', {
       defer: true,
       fn: async (deferred) => {
-        const req = await clientAuthenticatedHttps.request(
+        const req = await cahHttps.request(
           { cahKeysDir: testCahkeysDir, port: 45230 },
           (res) => { deferred.resolve() }
         )
@@ -49,7 +49,7 @@ const main = async () => {
     .add('cah#request-cahIgnoreMismatchedHostName', {
       defer: true,
       fn: async (deferred) => {
-        const req = await clientAuthenticatedHttps.request(
+        const req = await cahHttps.request(
           {
             cahIgnoreMismatchedHostName: true,
             cahKeysDir: testCahkeysDir,

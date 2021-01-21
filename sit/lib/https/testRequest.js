@@ -1,8 +1,8 @@
-const { testCahkeysDir } = require('../filepaths')
-const clientAuthenticatedHttps = require('../..')
+const { testCahkeysDir } = require('../../filepaths')
+const { https } = require('../../..')
 
 const request = (requestOptions = {}) => new Promise((resolve, reject) => {
-  clientAuthenticatedHttps.request(
+  https.request(
     {
       cahKeysDir: testCahkeysDir,
       hostname: 'localhost',

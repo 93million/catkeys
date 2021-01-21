@@ -1,7 +1,7 @@
-const clientAuthenticatedHttps = require('../../clientAuthenticatedHttps')
+const https = require('../../../https')
 
 module.exports = async ({ port = 45231, ...options } = {}) => {
-  const srv = await clientAuthenticatedHttps.createServer(
+  const srv = await https.createServer(
     options,
     (req, res) => {
       const data = []

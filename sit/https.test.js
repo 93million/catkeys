@@ -1,46 +1,11 @@
-/* global afterAll beforeAll describe expect test */
+/* global describe expect test */
 
 const https = require('https')
-const path = require('path')
-const loadKey = require('../lib/loadKey')
-const setupTests = require('./lib/setupTests')
-const { testCahkeysDir, testCahkeysDir2 } = require('./filepaths')
-const testRequest = require('./lib/testRequest')
-
-let setup
-
-beforeAll(async () => {
-  try {
-    setup = await setupTests()
-  } catch (e) {
-    console.error(e)
-  }
-})
-afterAll(async () => setup.cleanup())
+const { testCahkeysDir2 } = require('./filepaths')
+const testRequest = require('./lib/https/testRequest')
 
 describe(
-  'Key generation',
-  () => {
-    test(
-      'should create valid authentication keys',
-      async () => {
-        const cahkey = await loadKey(path.resolve(
-          testCahkeysDir,
-          'server.cahkey'
-        ))
-
-        expect(cahkey).toEqual({
-          ca: expect.any(Buffer),
-          cert: expect.any(Buffer),
-          key: expect.any(Buffer)
-        })
-      }
-    )
-  }
-)
-
-describe(
-  'Server',
+  'CAT HTTPS Server',
   () => {
     test(
       'should reject connections from https clients',
@@ -79,7 +44,7 @@ describe(
 )
 
 describe(
-  'Client',
+  'CAT HTTPS Client',
   () => {
     test(
       'should connect using a valid cahkey',

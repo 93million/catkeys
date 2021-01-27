@@ -3,5 +3,6 @@ module.exports = {
   globalTeardown: '<rootDir>/globalTeardown.js',
   rootDir: 'sit',
   testEnvironment: 'node',
-  testTimeout: 120 * 1000
+  testTimeout: 120 * 1000,
+  verbose: true
 }

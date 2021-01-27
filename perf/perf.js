@@ -20,6 +20,7 @@ const main = async () => {
           { port: 45232, rejectUnauthorized: false },
           (res) => { deferred.resolve() }
         )
+
         req.on('error', (e) => { throw e })
         req.end()
       }
@@ -31,6 +32,7 @@ const main = async () => {
           { cahKeysDir: testCahkeysDir, port: 45231 },
           (res) => { deferred.resolve() }
         )
+
         req.on('error', (e) => { throw e })
         req.end()
       }
@@ -42,6 +44,7 @@ const main = async () => {
           { cahKeysDir: testCahkeysDir, port: 45230 },
           (res) => { deferred.resolve() }
         )
+
         req.on('error', (e) => { throw e })
         req.end()
       }
@@ -58,6 +61,7 @@ const main = async () => {
           },
           (res) => { deferred.resolve() }
         )
+
         req.on('error', (e) => { throw e })
         req.end()
       }

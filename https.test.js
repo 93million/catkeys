@@ -14,6 +14,6 @@ test(
   async () => {
     await https.get(url, opts, callback)
 
-    expect(request).toBeCalledWith(url, opts, callback, { method: 'GET' })
+    expect(request).toBeCalledWith(url, { method: 'GET' }, callback)
   }
 )

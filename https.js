@@ -5,11 +5,11 @@ const request = require('./lib/https/request')
 const cahHttps = {
   createServer,
   get (...args) {
-    const options = getOptionsArgFromArgs(args)
+    const [options, _args] = getOptionsArgFromArgs(args)
 
     options.method = 'GET'
 
-    return this.request(...args)
+    return this.request(..._args)
   },
   request
 }

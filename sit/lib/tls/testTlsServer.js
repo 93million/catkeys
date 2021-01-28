@@ -4,7 +4,7 @@ module.exports = ({ port = 45234, ...options } = {}) => {
   const srv = tls.createServer(
     options,
     (socket) => {
-      socket.write('Hello from HTTPS server')
+      socket.write('Hello from TLS server')
       socket.end()
     }
   )

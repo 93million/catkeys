@@ -16,9 +16,15 @@ const client = (requestOptions = {}) => new Promise((resolve, reject) => {
         chunks.push(chunk)
       })
       socket.on('end', () => {
-        resolve(chunks.join(''))
+        if (socket.authorized === true) {
+          resolve(chunks.join(''))
+        } else {
+          reject(socket.authorizationError)
+        }
       })
-      socket.on('error', reject)
+      socket.on('error', (e) => {
+        reject(e)
+      })
     })
 })
 

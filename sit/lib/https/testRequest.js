@@ -10,7 +10,9 @@ const request = (requestOptions = {}) => new Promise((resolve, reject) => {
       port: 45231,
       ...requestOptions
     },
-    (res) => { resolve(res.statusCode) }
+    (res) => {
+      resolve(res.statusCode)
+    }
   )
     .then((req) => {
       req.on('error', reject)

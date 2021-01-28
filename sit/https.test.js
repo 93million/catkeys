@@ -8,7 +8,7 @@ describe(
   'CAT HTTPS Server',
   () => {
     test(
-      'should reject connections from https clients',
+      'should reject connections from regular https clients',
       async () => {
         const request = () => new Promise((resolve, reject) => {
           const req = https.request(
@@ -77,7 +77,7 @@ describe(
     )
 
     test(
-      'should refuse to connect to HTTPS servers with self signed certs',
+      'should refuse to connect to servers with self signed certs',
       async () => {
         await expect(testRequest({
           cahIgnoreMismatchedHostName: true,
@@ -90,7 +90,7 @@ describe(
 
     test(
       // eslint-disable-next-line max-len
-      'should refuse to connect to HTTPS servers with certs signed by supported CAs',
+      'should refuse to connect to servers with certs signed by supported CAs',
       async () => {
         await expect(testRequest({
           cahIgnoreMismatchedHostName: true,

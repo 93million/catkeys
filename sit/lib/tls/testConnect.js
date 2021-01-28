@@ -1,9 +1,9 @@
-const { testCahkeysDir } = require('../../filepaths')
+const { testCatkeysDir } = require('../../filepaths')
 const { tls } = require('../../..')
 
 const client = (requestOptions = {}) => new Promise((resolve, reject) => {
   tls.connect({
-    cahKeysDir: testCahkeysDir,
+    catKeysDir: testCatkeysDir,
     host: 'localhost',
     port: 45233,
     ...requestOptions

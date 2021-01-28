@@ -44,7 +44,7 @@
             "-n",
             "localhost",
             "-k",
-            "${workspaceFolder}/cahkeys"
+            "${workspaceFolder}/catkeys"
           ],
           "console": "integratedTerminal",
           "internalConsoleOptions": "neverOpen",
@@ -65,7 +65,7 @@
             "-n",
             "client",
             "-k",
-            "${workspaceFolder}/cahkeys"
+            "${workspaceFolder}/catkeys"
           ],
           "console": "integratedTerminal",
           "internalConsoleOptions": "neverOpen",

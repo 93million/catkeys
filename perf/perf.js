@@ -1,8 +1,8 @@
-const { https: cahHttps } = require('..')
+const { https: catHttps } = require('..')
 const Benchmark = require('benchmark')
 const setupTests = require('../sit/lib/setupTests')
 const https = require('https')
-const { testCahkeysDir } = require('../sit/filepaths')
+const { testCatkeysDir } = require('../sit/filepaths')
 
 let setup
 
@@ -25,11 +25,11 @@ const main = async () => {
         req.end()
       }
     })
-    .add('cah#request', {
+    .add('cat#request', {
       defer: true,
       fn: async (deferred) => {
-        const req = await cahHttps.request(
-          { cahKeysDir: testCahkeysDir, port: 45231 },
+        const req = await catHttps.request(
+          { catKeysDir: testCatkeysDir, port: 45231 },
           (res) => { deferred.resolve() }
         )
 
@@ -37,11 +37,11 @@ const main = async () => {
         req.end()
       }
     })
-    .add('cah#request-cahCheckKeyExists', {
+    .add('cat#request-catCheckKeyExists', {
       defer: true,
       fn: async (deferred) => {
-        const req = await cahHttps.request(
-          { cahKeysDir: testCahkeysDir, port: 45230 },
+        const req = await catHttps.request(
+          { catKeysDir: testCatkeysDir, port: 45230 },
           (res) => { deferred.resolve() }
         )
 
@@ -49,13 +49,13 @@ const main = async () => {
         req.end()
       }
     })
-    .add('cah#request-cahIgnoreMismatchedHostName', {
+    .add('cat#request-catIgnoreMismatchedHostName', {
       defer: true,
       fn: async (deferred) => {
-        const req = await cahHttps.request(
+        const req = await catHttps.request(
           {
-            cahIgnoreMismatchedHostName: true,
-            cahKeysDir: testCahkeysDir,
+            catIgnoreMismatchedHostName: true,
+            catKeysDir: testCatkeysDir,
             hostname: '127.0.0.1',
             port: 45231
           },

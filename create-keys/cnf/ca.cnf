@@ -21,10 +21,10 @@ prompt                 = no
 countryName            = GB
 stateOrProvinceName    = Tyne and Wear
 localityName           = Newcastle upon Tyne
-organizationName       = clientAuthenticatedHttps
-organizationalUnitName = clientAuthenticatedHttps
-commonName             = clientAuthenticatedHttps
-emailAddress           = cahkeygen@example.com
+organizationName       = catkeys
+organizationalUnitName = catkeys
+commonName             = catkeys
+emailAddress           = catkeygen@example.com
 
 
 [ req_attributes ]

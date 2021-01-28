@@ -1,7 +1,7 @@
 /* global describe expect test */
 
 const https = require('https')
-const { testCahkeysDir2 } = require('./filepaths')
+const { testCatkeysDir2 } = require('./filepaths')
 const testRequest = require('./lib/https/testRequest')
 
 describe(
@@ -30,10 +30,10 @@ describe(
     )
 
     test(
-      'should reject connections from clients with an invalid cahkey',
+      'should reject connections from clients with an invalid catkey',
       async () => {
         await expect(testRequest({
-          cahKeysDir: testCahkeysDir2,
+          catKeysDir: testCatkeysDir2,
           rejectUnauthorized: false
         }))
           .rejects
@@ -47,7 +47,7 @@ describe(
   'CAT HTTPS Client',
   () => {
     test(
-      'should connect using a valid cahkey',
+      'should connect using a valid catkey',
       async () => {
         await expect(testRequest()).resolves.toBe(200)
       }
@@ -55,10 +55,10 @@ describe(
 
     test(
       // eslint-disable-next-line max-len
-      'should connect using a valid cahkey to an mismatched hostname using `cahIgnoreMismatchedHostName: true`',
+      'should connect using a valid catkey to an mismatched hostname using `catIgnoreMismatchedHostName: true`',
       async () => {
         await expect(testRequest({
-          cahIgnoreMismatchedHostName: true,
+          catIgnoreMismatchedHostName: true,
           hostname: '127.0.0.1'
         }))
           .resolves
@@ -80,7 +80,7 @@ describe(
       'should refuse to connect to servers with self signed certs',
       async () => {
         await expect(testRequest({
-          cahIgnoreMismatchedHostName: true,
+          catIgnoreMismatchedHostName: true,
           port: 45232
         }))
           .rejects
@@ -93,7 +93,7 @@ describe(
       'should refuse to connect to servers with certs signed by supported CAs',
       async () => {
         await expect(testRequest({
-          cahIgnoreMismatchedHostName: true,
+          catIgnoreMismatchedHostName: true,
           hostname: 'google.com',
           port: 443
         }))

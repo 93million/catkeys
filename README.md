@@ -3,16 +3,16 @@
 </div>
 
 <div align="center">
-  <img src="readme/images/cah_logo.svg" alt="Client Authenticated HTTPS logo" height="160" />
+  <img src="readme/images/cat_logo.svg" alt="CatKeys logo" height="160" />
 </div>
 
-# Client Authenticated HTTPS
+# CatKeys
 
 *HTTPS communication authenticated using client as well as server SSL certificates*
 
-## What is Client Authenticated HTTPS?
+## What is CatKeys?
 
-Client Authenticated HTTPS is a [Node.JS](https://nodejs.org/) library. It is useful when you want to guarantee that only authenticated clients can communicate with a server using HTTPS encryption.
+CatKeys is a [Node.JS](https://nodejs.org/) library. It is useful when you want to guarantee that only authenticated clients can communicate with a server using HTTPS encryption.
 
 Generate keys for both the server and the clients then use this library as a drop-in replacement anywhere you have used `https.request()`, `https.get()`, and `https.createServer()`.
 
@@ -30,30 +30,30 @@ Works with Node v12 or later
 
 ### Setting up keys
 
-Create a directory named `cahkeys` to hold server and client keys. A good place to put this directory is in your project root directory.
+Create a directory named `catkeys` to hold server and client keys. A good place to put this directory is in your project root directory.
 
 #### Generating a server key
 
 Generate the server key using the command:
 
 ```
-npx client-authenticated-https create-key --server --keydir /path/to/cahkeys --name <server-hostname>
+npx catkeys create-key --server --keydir /path/to/catkeys --name <server-hostname>
 ```
 
 There can be only 1 server key. Running the command again will overwrite any existing server keys.
 
 The value `<server-hostname>` passed to `--name` must noramlly match the host name the clients will use to connect to the server or a connection will not be established. Currently, `<server-hostname>` can only be a single, fixed hostname. Wildcards or alternative names are not currently supported. If you omit `--name` the default name '`localhost`' will be used.
 
-Passing the option `{ cahIgnoreMismatchedHostName: true }` when calling `request()` or `get()` will ignore any mismatch with the host name of the server. Using this option does not invalidate security as the client continues to validate the server using the certificate authority in the client cahkey, just as the server validates the client using the certificate authority in the server key.
+Passing the option `{ catIgnoreMismatchedHostName: true }` when calling `request()` or `get()` will ignore any mismatch with the host name of the server. Using this option does not invalidate security as the client continues to validate the server using the certificate authority in the client catkey, just as the server validates the client using the certificate authority in the server key.
 
-Take a look in your `cahkeys` directory - you will now see `server.cahkey`
+Take a look in your `catkeys` directory - you will now see `server.catkey`
 
 ```
-$ ls -la /path/to/cahkeys/
+$ ls -la /path/to/catkeys/
 total 16
 drwxr-xr-x  3 pommy  staff    96  4 Sep 22:13 .
 drwxr-xr-x  9 pommy  staff   288  4 Sep 21:48 ..
--rw-r--r--  1 pommy  staff  7857  4 Sep 21:09 server.cahkey
+-rw-r--r--  1 pommy  staff  7857  4 Sep 21:09 server.catkey
 ```
 
 #### Generating client keys
@@ -61,7 +61,7 @@ drwxr-xr-x  9 pommy  staff   288  4 Sep 21:48 ..
 Generate a client key using the command:
 
 ```
-npx client-authenticated-https create-key --keydir /path/to/cahkeys --name client
+npx catkeys create-key --keydir /path/to/catkeys --name client
 ```
 
 There can be as many client keys as you require. You can chose to give each client a unique key or share a key between many clients.
@@ -70,15 +70,15 @@ If you omit `--name` the default name '`client`' will be used. Unlike the server
 
 **NB: The server key is effectively the master key. All client keys are generated from the server key. If you regenerate the server key you will need to regenerate all the client keys!!! For this reason it may be worth making a secure backup of the server key.**
 
-Take a look in your `cahkeys` directory - you will now see `client.cahkey`
+Take a look in your `catkeys` directory - you will now see `client.catkey`
 
 ```
-$ ls -la cahkeys/
+$ ls -la catkeys/
 total 32
 drwxr-xr-x  4 pommy  staff   128  4 Sep 21:10 .
 drwxr-xr-x  9 pommy  staff   288  4 Sep 21:48 ..
--rw-r--r--  1 pommy  staff  5372  4 Sep 21:10 client.cahkey
--rw-r--r--  1 pommy  staff  7857  4 Sep 21:09 server.cahkey
+-rw-r--r--  1 pommy  staff  5372  4 Sep 21:10 client.catkey
+-rw-r--r--  1 pommy  staff  7857  4 Sep 21:09 server.catkey
 ```
 
 You can generate as many client keys as you wish, however if you have more than 1 you will need to specify which to use when making a request.
@@ -94,7 +94,7 @@ See the node documentation for information about how to use these methods:
 
 #### Creating a server
 
-Let's review how to migrate the following server, written using the standard `https` library, to `clientAuthenticatedKeys`:
+Let's review how to migrate the following server, written using the standard `https` library, to `catkeys`:
 
 ```javascript
 const https = require('https')
@@ -114,16 +114,16 @@ exports = () => {
 
 The following changes need to be made:
 
-* Require `client-authenticated-https` instead of `https`
+* Require `catkeys` instead of `https`
 * `await` on `.createServer()` before chaining the returned value to `.listen(443)`
-* Update the enclosing function to use `async` (or alternativly use `clientAuthenticatedHttps.createServer()` as a promise)
-* Remove SSL options related to `cert`, `key` and `ca` as these are replaced by the keys generated by `npx client-authenticated-https create-key`
+* Update the enclosing function to use `async` (or alternativly use `catkeys.createServer()` as a promise)
+* Remove SSL options related to `cert`, `key` and `ca` as these are replaced by the keys generated by `npx catkeys create-key`
 
 ```javascript
-const clientAuthenticatedHttps = require('client-authenticated-https')
+const catkeys = require('catkeys')
 
 exports = async () => {
-  (await clientAuthenticatedHttps.createServer(
+  (await catkeys.createServer(
     (req, res) => {
       …
     }
@@ -135,12 +135,12 @@ exports = async () => {
 
 Install the client key on the client:
 
-* Create a directory in your project root named `cahkeys`
-* Copy the file `client.cahkey` you created from the server into this directory
+* Create a directory in your project root named `catkeys`
+* Copy the file `client.catkey` you created from the server into this directory
 
-*If you want to place the `cahkeys` directory in a custom location, [use an env var](#specifying-a-custom-location-for-the-cahkeys-directory)*
+*If you want to place the `catkeys` directory in a custom location, [use an env var](#specifying-a-custom-location-for-the-catkeys-directory)*
 
-Let's review how to migrate the following request, written using the standard `https` library, to `clientAuthenticatedKeys`:
+Let's review how to migrate the following request, written using the standard `https` library, to `catkeys`:
 
 ```javascript
 const https = require('https')
@@ -161,19 +161,19 @@ exports = () => {
 
 The following changes need to be made:
 
-* Require `client-authenticated-https` instead of `https`
+* Require `catkeys` instead of `https`
 * `await` on `.request()` before calling further methods on the returned request object
-* Update the enclosing function to use `async` (or alternativly use `clientAuthenticatedHttps.request()` as a promise)
-* Optionally specify the name of the cahkey to use to make the request. This is useful if there is more than 1 client key in your `cahkeys` directory. Do not include the `.cahkey` file extension. A cahkey can also be defined by setting the environment variable `CAH_KEY_NAME` (again, without extension).
+* Update the enclosing function to use `async` (or alternativly use `catkeys.request()` as a promise)
+* Optionally specify the name of the catkey to use to make the request. This is useful if there is more than 1 client key in your `catkeys` directory. Do not include the `.catkey` file extension. A catkey can also be defined by setting the environment variable `CAT_KEY_NAME` (again, without extension).
 
 ```javascript
-const clientAuthenticatedHttps = require('client-authenticated-https')
+const catkeys = require('catkeys')
 
 exports = async () => {
-  const req = await clientAuthenticatedHttps.request(
+  const req = await catkeys.request(
     {
       url: 'https://secure.example.com/',
-      cahkey: 'my-special-key',
+      catkey: 'my-special-key',
       …
     },
     (res) => { … }
@@ -188,9 +188,9 @@ exports = async () => {
 
 Look in `./example/` for a working example of a server and client
 
-## Specifying a custom location for the `cahkeys` directory
+## Specifying a custom location for the `catkeys` directory
 
-The `cahkeys` directory is located by progressing back through the filesystem from the `client-authenticated-https` directory until a `cahkeys` directory is found. You can specify a directory at an alternative location by supplying a path to the directory in the env var `CAH_KEY_DIR`.
+The `catkeys` directory is located by progressing back through the filesystem from the `catkeys` directory until a `catkeys` directory is found. You can specify a directory at an alternative location by supplying a path to the directory in the env var `CAT_KEY_DIR`.
 
 ## Tests
 

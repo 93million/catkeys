@@ -1,8 +1,8 @@
 const { promisify } = require('util')
 const childProcess = require('child_process')
 const fse = require('fs-extra')
-const startCahHttpsServer = require('./https/testCahHttpsServer')
-const startCahTlsServer = require('./tls/testCahTlsServer')
+const startCahHttpsServer = require('./https/testCatHttpsServer')
+const startCahTlsServer = require('./tls/testCatTlsServer')
 const startHttpServer = require('./https/testHttpsServer')
 const startTlsServer = require('./tls/testTlsServer')
 const path = require('path')
@@ -15,8 +15,8 @@ const readFile = promisify(fs.readFile)
 const {
   cliCmd,
   testDir,
-  testCahkeysDir,
-  testCahkeysDir2,
+  testCatkeysDir,
+  testCatkeysDir2,
   testSSLKeysDir
 } = require('../filepaths')
 
@@ -24,21 +24,21 @@ module.exports = async () => {
   await fse.emptyDir(testDir)
   await execFile(
     'node',
-    [cliCmd, 'create-key', '--server', '--keydir', testCahkeysDir]
+    [cliCmd, 'create-key', '--server', '--keydir', testCatkeysDir]
   )
-  await execFile('node', [cliCmd, 'create-key', '--keydir', testCahkeysDir])
+  await execFile('node', [cliCmd, 'create-key', '--keydir', testCatkeysDir])
   await execFile(
     'node',
-    [cliCmd, 'create-key', '--server', '--keydir', testCahkeysDir2]
+    [cliCmd, 'create-key', '--server', '--keydir', testCatkeysDir2]
   )
-  await execFile('node', [cliCmd, 'create-key', '--keydir', testCahkeysDir2])
+  await execFile('node', [cliCmd, 'create-key', '--keydir', testCatkeysDir2])
   const stopServers = []
 
-  stopServers.push(await startCahHttpsServer({ cahKeysDir: testCahkeysDir }))
-  stopServers.push(await startCahTlsServer({ cahKeysDir: testCahkeysDir }))
+  stopServers.push(await startCahHttpsServer({ catKeysDir: testCatkeysDir }))
+  stopServers.push(await startCahTlsServer({ catKeysDir: testCatkeysDir }))
   stopServers.push(await startCahHttpsServer({
-    cahCheckKeyExists: true,
-    cahKeysDir: testCahkeysDir,
+    catCheckKeyExists: true,
+    catKeysDir: testCatkeysDir,
     port: 45230
   }))
   await createHttpsCert({ keydir: testSSLKeysDir, commonName: 'localhost' })

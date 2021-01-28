@@ -1,10 +1,10 @@
 {
-  "name": "client-authenticated-https",
+  "name": "catkeys",
   "version": "1.1.0",
   "bin": "./cli.js",
   "description": "Secure HTTPS communication authenticated using client-side SSL certificates",
-  "main": "clientAuthenticatedTcp.js",
-  "repository": "https://github.com/93million/client-authenticated-https",
+  "main": "catkeys.js",
+  "repository": "https://github.com/93million/catkeys",
   "directories": {
     "bin": "./bin",
     "lib": "./lib"

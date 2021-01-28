@@ -1,10 +1,10 @@
-const { testCahkeysDir } = require('../../filepaths')
+const { testCatkeysDir } = require('../../filepaths')
 const { https } = require('../../..')
 
 const request = (requestOptions = {}) => new Promise((resolve, reject) => {
   https.request(
     {
-      cahKeysDir: testCahkeysDir,
+      catKeysDir: testCatkeysDir,
       hostname: 'localhost',
       method: 'GET',
       port: 45231,

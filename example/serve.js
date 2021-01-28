@@ -1,8 +1,8 @@
-const clientAuthenticatedHttps = require('client-authenticated-https')
+const catkeys = require('catkeys')
 
 const serve = async () => {
-  (await clientAuthenticatedHttps.createServer(
-    { cahCheckKeyExists: true },
+  (await catkeys.createServer(
+    { catCheckKeyExists: true },
     (req, res) => {
       const data = []
 

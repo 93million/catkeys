@@ -28,19 +28,19 @@ while getopts ":n:k:" o; do
 done
 shift $((OPTIND-1))
 
-if [ ! -f "$KEYDIR/server.cahkey" ]; then
+if [ ! -f "$KEYDIR/server.catkey" ]; then
   echo "Server key not found. Generate a server key before atttempting to generate a client key" >&2
   exit 1
 fi
 
-tar -xzf "$KEYDIR/server.cahkey" -C "$KEYDIR" "ca-crt.pem" "ca-key.pem" ".srl"
+tar -xzf "$KEYDIR/server.catkey" -C "$KEYDIR" "ca-crt.pem" "ca-key.pem" ".srl"
 
 openssl genrsa -out "$KEYDIR/key.pem" 4096 2> /dev/null
 
 openssl \
   req \
   -new \
-  -subj "/C=GB/ST=Tyne and Wear/L=Newcastle upon Tyne/O=clientAuthenticatedHttps/OU=clientAuthenticatedHttps/CN=$COMMON_NAME" \
+  -subj "/C=GB/ST=Tyne and Wear/L=Newcastle upon Tyne/O=catkeys/OU=catkeys/CN=$COMMON_NAME" \
   -key "$KEYDIR/key.pem" \
   -out "$KEYDIR/csr.pem" \
   2> /dev/null
@@ -56,4 +56,4 @@ openssl \
   -CAserial "$KEYDIR/.srl" \
   2> /dev/null
 
-tar -czf "$KEYDIR/$COMMON_NAME.cahkey" -C "$KEYDIR" "ca-crt.pem" "crt.pem" "key.pem"
+tar -czf "$KEYDIR/$COMMON_NAME.catkey" -C "$KEYDIR" "ca-crt.pem" "crt.pem" "key.pem"

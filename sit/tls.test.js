@@ -2,7 +2,7 @@
 
 const tls = require('tls')
 const testConnect = require('./lib/tls/testConnect')
-const { testCahkeysDir2 } = require('./filepaths')
+const { testCatkeysDir2 } = require('./filepaths')
 
 describe(
   'CAT TLS Server',
@@ -42,10 +42,10 @@ describe(
     )
 
     test(
-      'should reject connections from clients with an invalid cahkey',
+      'should reject connections from clients with an invalid catkey',
       async () => {
         await expect(testConnect({
-          cahKeysDir: testCahkeysDir2,
+          catKeysDir: testCatkeysDir2,
           rejectUnauthorized: false
         }))
           .rejects
@@ -59,7 +59,7 @@ describe(
   'CAT TLS Client',
   () => {
     test(
-      'should connect using a valid cahkey',
+      'should connect using a valid catkey',
       async () => {
         await expect(testConnect()).resolves.toBe('Hello from CAT')
       }
@@ -67,10 +67,10 @@ describe(
 
     test(
       // eslint-disable-next-line max-len
-      'should connect using a valid cahkey to an mismatched hostname using `cahIgnoreMismatchedHostName: true`',
+      'should connect using a valid catkey to an mismatched hostname using `catIgnoreMismatchedHostName: true`',
       async () => {
         await expect(testConnect({
-          cahIgnoreMismatchedHostName: true,
+          catIgnoreMismatchedHostName: true,
           host: '127.0.0.1'
         }))
           .resolves
@@ -92,7 +92,7 @@ describe(
       'should refuse to connect to servers with self signed certs',
       async () => {
         await expect(testConnect({
-          cahIgnoreMismatchedHostName: true,
+          catIgnoreMismatchedHostName: true,
           port: 45232
         }))
           .rejects
@@ -105,7 +105,7 @@ describe(
       'should refuse to connect to servers with certs signed by supported CAs',
       async () => {
         await expect(testConnect({
-          cahIgnoreMismatchedHostName: true,
+          catIgnoreMismatchedHostName: true,
           host: 'google.com',
           port: 443,
           servername: 'google.com'

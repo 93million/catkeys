@@ -1,10 +1,10 @@
 {
-  "name": "cah-demo",
+  "name": "cat-demo",
   "version": "1.0.0",
   "description": "",
   "main": "httpsServer.js",
   "dependencies": {
-    "client-authenticated-https": ".."
+    "catkeys": ".."
   },
   "devDependencies": {},
   "scripts": {

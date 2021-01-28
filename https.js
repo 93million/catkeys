@@ -2,7 +2,7 @@ const getOptionsArgFromArgs = require('./lib/getOptionsArgFromArgs')
 const createServer = require('./lib/https/createServer')
 const request = require('./lib/https/request')
 
-const cahHttps = {
+const catHttps = {
   createServer,
   get (...args) {
     const [options, _args] = getOptionsArgFromArgs(args)
@@ -14,4 +14,4 @@ const cahHttps = {
   request
 }
 
-module.exports = cahHttps
+module.exports = catHttps

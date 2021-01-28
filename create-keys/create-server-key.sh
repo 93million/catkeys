@@ -46,7 +46,7 @@ openssl \
 openssl genrsa -out "$KEYDIR/key.pem" 4096 2> /dev/null
 
 SUBJECT_LOCATION="C=GB/ST=Tyne and Wear/L=Newcastle upon Tyne"
-SUBJECT_ORG="O=clientAuthenticatedHttps/OU=clientAuthenticatedHttps"
+SUBJECT_ORG="O=catkeys/OU=catkeys"
 
 openssl \
   req \
@@ -69,7 +69,7 @@ openssl \
   -out "$KEYDIR/crt.pem" \
   2> /dev/null
 
-tar -czf "$KEYDIR/server.cahkey" \
+tar -czf "$KEYDIR/server.catkey" \
   -C "$KEYDIR" \
   "ca-crt.pem" "ca-key.pem" "crt.pem" "key.pem" ".srl"
 

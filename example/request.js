@@ -1,9 +1,9 @@
-const clientAuthenticatedHttps = require('client-authenticated-https')
+const catkeys = require('catkeys')
 
 const request = async () => {
   const postData = 'Dibber Dobber!!! Bimble Bomble!!!'
 
-  const req = await clientAuthenticatedHttps.request(
+  const req = await catkeys.request(
     {
       hostname: 'localhost',
       method: 'POST',

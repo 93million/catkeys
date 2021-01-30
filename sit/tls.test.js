@@ -93,7 +93,7 @@ describe(
       async () => {
         await expect(testConnect({
           catIgnoreMismatchedHostName: true,
-          port: 45232
+          port: 45234
         }))
           .rejects
           .toHaveProperty('code', 'CERT_SIGNATURE_FAILURE')

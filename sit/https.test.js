@@ -1,7 +1,7 @@
 /* global describe expect test */
 
 const https = require('https')
-const { testCatkeysDir2 } = require('./filepaths')
+const { testCatkeysDir2, testLegacyCahkeysDir } = require('./filepaths')
 const testRequest = require('./lib/https/testRequest')
 
 describe(
@@ -99,6 +99,16 @@ describe(
         }))
           .rejects
           .toHaveProperty('code', 'UNABLE_TO_GET_ISSUER_CERT_LOCALLY')
+      }
+    )
+
+    test(
+      'should connect using a valid catkey with a legacy cahkeys extension',
+      async () => {
+        await expect(testRequest({
+          port: 45235,
+          catKeysDir: testLegacyCahkeysDir
+        })).resolves.toBe(200)
       }
     )
   }

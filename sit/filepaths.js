@@ -7,14 +7,16 @@ const testDir = path.resolve(sitDir, 'test')
 const testLegacyCahkeysDir = path.resolve(testDir, 'cahkeys')
 const testCatkeysDir = path.resolve(testDir, 'catkeys')
 const testCatkeysDir2 = path.resolve(testDir, 'catkeys2')
+const testClientOnlyCatkeysDir = path.resolve(testDir, 'clientonlycatkeys')
 const testSSLKeysDir = path.resolve(testDir, 'ssl')
 
 module.exports = {
   binDir,
   cliCmd,
   testDir,
-  testLegacyCahkeysDir,
   testCatkeysDir,
   testCatkeysDir2,
+  testClientOnlyCatkeysDir,
+  testLegacyCahkeysDir,
   testSSLKeysDir
 }

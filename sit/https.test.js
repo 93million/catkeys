@@ -1,7 +1,11 @@
 /* global describe expect test */
 
 const https = require('https')
-const { testCatkeysDir2, testLegacyCahkeysDir } = require('./filepaths')
+const {
+  testCatkeysDir2,
+  testLegacyCahkeysDir,
+  testClientOnlyCatkeysDir
+} = require('./filepaths')
 const testRequest = require('./lib/https/testRequest')
 
 describe(
@@ -38,6 +42,20 @@ describe(
         }))
           .rejects
           .toHaveProperty('code', 'ECONNRESET')
+      }
+    )
+
+    test(
+      // eslint-disable-next-line max-len
+      'should reject clients with missing key with servers running with `catCheckKeyExists: true`',
+      async () => {
+        await expect(testRequest({
+          catKeysDir: testClientOnlyCatkeysDir,
+          rejectUnauthorized: false,
+          port: 45230
+        }))
+          .resolves
+          .toBe(403)
       }
     )
   }

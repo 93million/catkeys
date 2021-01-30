@@ -16,20 +16,26 @@ const rename = promisify(fs.rename)
 const {
   cliCmd,
   testDir,
-  testLegacyCahkeysDir,
   testCatkeysDir,
   testCatkeysDir2,
+  testClientOnlyCatkeysDir,
+  testLegacyCahkeysDir,
   testSSLKeysDir
 } = require('../filepaths')
 
 module.exports = async () => {
   await fse.emptyDir(testDir)
+  await fse.mkdir(testClientOnlyCatkeysDir)
 
   await execFile(
     'node',
     [cliCmd, 'create-key', '--server', '--keydir', testCatkeysDir]
   )
   await execFile('node', [cliCmd, 'create-key', '--keydir', testCatkeysDir])
+  await execFile(
+    'node',
+    [cliCmd, 'create-key', '--keydir', testCatkeysDir, '--name', 'clientonly']
+  )
   await execFile(
     'node',
     [cliCmd, 'create-key', '--server', '--keydir', testCatkeysDir2]
@@ -51,6 +57,10 @@ module.exports = async () => {
   await rename(
     path.resolve(testLegacyCahkeysDir, 'client.catkey'),
     path.resolve(testLegacyCahkeysDir, 'client.cahkey')
+  )
+  await rename(
+    path.resolve(testCatkeysDir, 'clientonly.catkey'),
+    path.resolve(testClientOnlyCatkeysDir, 'clientonly.catkey')
   )
 
   const stopServers = []

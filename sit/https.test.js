@@ -72,13 +72,9 @@ describe(
     )
 
     test(
-      // eslint-disable-next-line max-len
-      'should connect using a valid catkey to an mismatched hostname using `catIgnoreMismatchedHostName: true`',
+      'should connect to mismatched hostname',
       async () => {
-        await expect(testRequest({
-          catIgnoreMismatchedHostName: true,
-          hostname: '127.0.0.1'
-        }))
+        await expect(testRequest({ hostname: '127.0.0.1' }))
           .resolves
           .toBe(200)
       }
@@ -86,9 +82,12 @@ describe(
 
     test(
       // eslint-disable-next-line max-len
-      'should refuse to connect to server when hostname doesn\'t match cert alt name',
+      'should refuse to connect to mismatched hostname when catIgnoreMismatchedHostName = false',
       async () => {
-        await expect(testRequest({ hostname: '127.0.0.1' }))
+        await expect(testRequest({
+          hostname: '127.0.0.1',
+          catIgnoreMismatchedHostName: false
+        }))
           .rejects
           .toHaveProperty('code', 'ERR_TLS_CERT_ALTNAME_INVALID')
       }

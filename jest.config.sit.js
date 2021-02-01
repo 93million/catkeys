@@ -1,4 +1,5 @@
 module.exports = {
+  clearMocks: true,
   globalSetup: '<rootDir>/globalSetup.js',
   globalTeardown: '<rootDir>/globalTeardown.js',
   rootDir: 'sit',

@@ -2,7 +2,7 @@
 
 const tls = require('tls')
 const testConnect = require('./lib/tls/testConnect')
-const { testCatkeysDir2 } = require('./filepaths')
+const { testCatkeysDir2, testClientOnlyCatkeysDir } = require('./filepaths')
 
 describe(
   'CAT TLS Server',
@@ -50,6 +50,20 @@ describe(
         }))
           .rejects
           .toBe('CERT_SIGNATURE_FAILURE')
+      }
+    )
+
+    test(
+      // eslint-disable-next-line max-len
+      'should reject clients with missing key with servers running with `catCheckKeyExists: true`',
+      async () => {
+        await expect(testConnect({
+          catKeysDir: testClientOnlyCatkeysDir,
+          rejectUnauthorized: false,
+          port: 45236
+        }))
+          .resolves
+          .toBe('catkey not present on disk')
       }
     )
   }

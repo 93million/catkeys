@@ -72,6 +72,11 @@ module.exports = async () => {
     catKeysDir: testCatkeysDir,
     port: 45230
   }))
+  stopServers.push(await startCatTlsServer({
+    catCheckKeyExists: true,
+    catKeysDir: testCatkeysDir,
+    port: 45236
+  }))
   stopServers.push(await startCatHttpsServer({
     catKeysDir: testLegacyCahkeysDir,
     port: 45235

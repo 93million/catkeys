@@ -63,7 +63,7 @@ describe(
           port: 45236
         }))
           .resolves
-          .toBe('catkey not present on disk')
+          .toBe('')
       }
     )
   }

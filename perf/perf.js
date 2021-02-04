@@ -11,7 +11,6 @@ const main = async () => {
 
   const suite = new Benchmark.Suite()
 
-  // return
   suite
     .add('https#request', {
       defer: true,
@@ -70,7 +69,6 @@ const main = async () => {
       console.log(String(event.target))
     })
     .on('complete', function () {
-      // console.log('Fastest is ' + this.filter('fastest').map('name'))
       setup.cleanup()
     })
     .run()

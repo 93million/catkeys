@@ -1,7 +1,7 @@
-const catkeys = require('catkeys')
+const { https } = require('catkeys')
 
 const serve = async () => {
-  (await catkeys.createServer(
+  (await https.createServer(
     { catCheckKeyExists: true },
     (req, res) => {
       const data = []

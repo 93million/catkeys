@@ -12,5 +12,5 @@
     "serve": "node serve.js"
   },
   "author": "",
-  "license": "ISC"
+  "license": "MIT"
 }

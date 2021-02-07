@@ -186,7 +186,7 @@ exports = async () => {
 
 ## Examples
 
-Look in `./example/` for a working example of a server and client
+Look in `./examples/` for a working example of a server and client
 
 ## Specifying a custom location for the `catkeys` directory
 

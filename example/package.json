@@ -6,6 +6,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "catkeys": "..",
+    "express": "^4.17.1",
     "json-socket": "^0.3.0"
   },
   "devDependencies": {},

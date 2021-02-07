@@ -1,34 +1,34 @@
-# Example catkeys client and server
+# Example CatKeys clients and servers
 
-Steps to see this example working:
+There are several examples given showing how to use CatKeys with various libraries.
 
-* Change to the example directory (`cd /path/to/catkeys/example`)
+Each example includes a server (`serve.js`) and client (`request.js`)
+
+The directories `https` and `tls` contain basic examples and are a good place to start.
+
+* https - shows how to use `catkeys.https` as a replacement for `https` - creating a server with `createServer()` and making a request using `request()`
+* tls - shows how to use `catkeys.tls` as a replacement for `tls` - creating a server with `createServer()` and connecting from a client using `connect()`
+
+Examples for the following libraries are included:
+
+* Axios
+* Express
+* json-socket
+
+Steps:
+
+* Change to the example directory (`cd /path/to/catkeys/examples`)
 * Install dependencies (`npm install`)
-
-## Generate the catkeys
-
 * Generate the server key: `npx catkeys create-key --keydir catkeys --server`
 * Generate the client key: `npx catkeys create-key --keydir catkeys`
-
-## Run the HTTPS example:
-
-* In one terminal instance, run the server `CAT_KEYS_DIR=catkeys npm run https/serve`
-* In another terminal instance, make the request `CAT_KEYS_DIR=catkeys npm run https/request`
+* In one terminal instance, run the server for the example you want to run eg. `node https/serve.js`
+* In another terminal instance, make the request eg. `node https/request.js`
 
 You should see the response from the server printed in the terminal when making the request:
 
+Eg:
+
 ```
-$ npm run request
-
-> cat-demo@1.0.0 request /…/catkeys/example
-> node request.js
-
-Data received: Dibber Dobber!!! Bimble Bomble!!!
+$ node https/request.js
+Data received: Hello from Catkeys client!
 ```
-
-### Run the TCP over TLS example:
-
-* In one terminal instance, run the server `CAT_KEYS_DIR=catkeys npm run tls/serve`
-* In another terminal instance, make the request `CAT_KEYS_DIR=catkeys npm run tls/request`
-
-Now try using the keyboard. Data inputted over stdin will be sent from the client to the server - and from the server to the client.

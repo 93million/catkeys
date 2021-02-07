@@ -1,7 +1,7 @@
 const { https } = require('catkeys')
 
 const request = async () => {
-  const postData = 'Dibber Dobber!!! Bimble Bomble!!!'
+  const postData = 'Hello from Catkeys client!'
 
   const req = await https.request(
     {

@@ -4,6 +4,7 @@
   "description": "",
   "main": "httpsServer.js",
   "dependencies": {
+    "axios": "^0.21.1",
     "catkeys": "..",
     "json-socket": "^0.3.0"
   },

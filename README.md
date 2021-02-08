@@ -1,91 +1,73 @@
 <div align="right">
-  <img src="readme/images/93million_logo.svg" alt="93 Million Ltd. logo" height="36" />
+  <img src="docs/images/93million_logo.svg" alt="93 Million Ltd. logo" height="36" />
 </div>
-
 <div align="center">
-  <img src="readme/images/cat_logo.svg" alt="CatKeys logo" height="160" />
+  <img src="docs/images/catkeys_logo.svg" alt="CATKeys logo" height="270" />
 </div>
 
-# CatKeys
+![Node.js CI](https://github.com/93million/catkeys/workflows/Node.js%20CI/badge.svg)
 
-*HTTPS communication authenticated using client as well as server SSL certificates*
+# CATKeys
 
-## What is CatKeys?
+*TLS/SSL communication using client certificates for mutual authentication*
 
-CatKeys is a [Node.JS](https://nodejs.org/) library. It is useful when you want to guarantee that only authenticated clients can communicate with a server using HTTPS encryption.
+## What is CATKeys?
 
-Generate keys for both the server and the clients then use this library as a drop-in replacement anywhere you have used `https.request()`, `https.get()`, and `https.createServer()`.
+CATKeys is a [Node.JS](https://nodejs.org/) library. It is an implementation of TLS/SSL client certificates for mutual authentication. It is useful when you want to guarantee that only authenticated clients can communicate with a server using HTTPS or a TLS connection.
 
-Client keys are single files that can be easily installed by placing in a directory on the client to grant access to the server.
+Mutual authentication means that clients will only connect to valid servers; while servers will only allow valid clients to connect. Authentication takes place in the TLS/SSL protocol and is invisible to your codebase. This means there is no authentication to handle as a developer - if you are receiving the request then both the server and client have been validated by each other.
 
-This library is open source under the MIT license and has good coverage with unit tests and integration tests.
+The complexities of generating private keys, certificates and CAs are taken care of by simple commands. Keys are packaged as single files that can be easily placed on a client in order to grant access to a server.
+
+Generate server and client keys, then use this library as a drop in replacement anywhere you have used `https.createServer`, `https.request()`, `tls.createServer()` or `tls.connect()`.
+
+CATKeys is open source under the MIT license and has good coverage with unit tests and integration tests.
 
 ## Getting started
 
+All commands must be run from your project root that contains your `package.json`
+
 ### Requirements
 
-`openssl` must be installed and present in your path to generate keys. It is included in most distributions.
+ - OpenSSL (which is included in most distributions). [See here](docs/Windows%20support.md) for instructions installing OpenSSL on Windows.
+ - Node v12 or later
 
-Works with Node v12 or later
+### Installing CATKeys
 
-### Setting up keys
+```
+npm install --save catkeys
+```
 
-Create a directory named `catkeys` to hold server and client keys. A good place to put this directory is in your project root directory.
+### Creating keys
+
+A server key must be generated first. Client keys are generated from the server key.
 
 #### Generating a server key
 
-Generate the server key using the command:
+The following command generates a server key named `server.catkey` in a directory named `catkeys`:
 
 ```
-npx catkeys create-key --server --keydir /path/to/catkeys --name <server-hostname>
-```
-
-There can be only 1 server key. Running the command again will overwrite any existing server keys.
-
-The value `<server-hostname>` passed to `--name` must noramlly match the host name the clients will use to connect to the server or a connection will not be established. Currently, `<server-hostname>` can only be a single, fixed hostname. Wildcards or alternative names are not currently supported. If you omit `--name` the default name '`localhost`' will be used.
-
-Passing the option `{ catIgnoreMismatchedHostName: true }` when calling `request()` or `get()` will ignore any mismatch with the host name of the server. Using this option does not invalidate security as the client continues to validate the server using the certificate authority in the client catkey, just as the server validates the client using the certificate authority in the server key.
-
-Take a look in your `catkeys` directory - you will now see `server.catkey`
-
-```
-$ ls -la /path/to/catkeys/
-total 16
-drwxr-xr-x  3 pommy  staff    96  4 Sep 22:13 .
-drwxr-xr-x  9 pommy  staff   288  4 Sep 21:48 ..
--rw-r--r--  1 pommy  staff  7857  4 Sep 21:09 server.catkey
+npx catkeys create-key --server --keydir catkeys
 ```
 
 #### Generating client keys
 
-Generate a client key using the command:
-
 ```
-npx catkeys create-key --keydir /path/to/catkeys --name client
+npx catkeys create-key --keydir catkeys
 ```
 
-There can be as many client keys as you require. You can chose to give each client a unique key or share a key between many clients.
-
-If you omit `--name` the default name '`client`' will be used. Unlike the server key, it is not required that the value `<client-name>` passed to `--name` matches any of the network credentials of the client to establish a connection.
-
-**NB: The server key is effectively the master key. All client keys are generated from the server key. If you regenerate the server key you will need to regenerate all the client keys!!! For this reason it may be worth making a secure backup of the server key.**
-
-Take a look in your `catkeys` directory - you will now see `client.catkey`
+Take a look in your `catkeys` directory - you will now see `client.catkey` and `server.catkey`
 
 ```
-$ ls -la catkeys/
+$ ls -l catkeys
 total 32
-drwxr-xr-x  4 pommy  staff   128  4 Sep 21:10 .
-drwxr-xr-x  9 pommy  staff   288  4 Sep 21:48 ..
 -rw-r--r--  1 pommy  staff  5372  4 Sep 21:10 client.catkey
 -rw-r--r--  1 pommy  staff  7857  4 Sep 21:09 server.catkey
 ```
 
-You can generate as many client keys as you wish, however if you have more than 1 you will need to specify which to use when making a request.
+### Using CATKeys with HTTPS
 
-### Using the library
-
-The API extends Node's `https` with 2 methods overridden: `.request()` and `.createServer()`. Both these methods have the same signature as they do in the `https` library, however an important difference is that they are `async` methods.
+The `catkeys` library exports an object named `https` which includes `.request()` and `.createServer()` methods. These methods have the same signature as they do in Node's `https` library, however an important difference is that they are `async` methods.
 
 See the node documentation for information about how to use these methods:
 
@@ -94,106 +76,202 @@ See the node documentation for information about how to use these methods:
 
 #### Creating a server
 
-Let's review how to migrate the following server, written using the standard `https` library, to `catkeys`:
-
 ```javascript
-const https = require('https')
+const { https } = require('catkeys')
 
-exports = () => {
-  https.createServer(
-    {
-      cert: fs.readFileSync('/path/to/cert/fullchain.pem'),
-      key: fs.readFileSync('/path/to/cert/privkey.pem')
-    },
+const serve = async () => {
+  (await https.createServer(
     (req, res) => {
-      …
+      res.writeHead(200)
+      res.write('Hello from CATKeys over HTTPS')
+      res.end()
     }
-  ).listen(443)
+  )).listen(8000)
 }
-```
 
-The following changes need to be made:
-
-* Require `catkeys` instead of `https`
-* `await` on `.createServer()` before chaining the returned value to `.listen(443)`
-* Update the enclosing function to use `async` (or alternativly use `catkeys.createServer()` as a promise)
-* Remove SSL options related to `cert`, `key` and `ca` as these are replaced by the keys generated by `npx catkeys create-key`
-
-```javascript
-const catkeys = require('catkeys')
-
-exports = async () => {
-  (await catkeys.createServer(
-    (req, res) => {
-      …
-    }
-  )).listen(443)
-}
+serve()
 ```
 
 #### Creating a client
 
-Install the client key on the client:
-
-* Create a directory in your project root named `catkeys`
-* Copy the file `client.catkey` you created from the server into this directory
-
-*If you want to place the `catkeys` directory in a custom location, [use an env var](#specifying-a-custom-location-for-the-catkeys-directory)*
-
-Let's review how to migrate the following request, written using the standard `https` library, to `catkeys`:
+Ensure the `client.catkey` is present in the `catkeys` directory in the project root of the client.
 
 ```javascript
-const https = require('https')
+const { https } = require('catkeys')
 
-exports = () => {
-  const req = https.request(
-    {
-      url: 'https://secure.example.com/',
-      …
-    },
-    (res) => { … }
+const request = async () => {
+  const req = await https.request(
+    'https://localhost:8000',
+    (res) => {
+      const data = []
+
+      res.on('data', (chunk) => { data.push(chunk) })
+      res.on('end', () => { console.log(data.join('')) })
+      res.on('error', console.error)
+    }
   )
 
-  req.write(postData)
   req.end()
 }
+
+request()
 ```
 
-The following changes need to be made:
+### Using CATKeys over a TLS connection
 
-* Require `catkeys` instead of `https`
-* `await` on `.request()` before calling further methods on the returned request object
-* Update the enclosing function to use `async` (or alternativly use `catkeys.request()` as a promise)
-* Optionally specify the name of the catkey to use to make the request. This is useful if there is more than 1 client key in your `catkeys` directory. Do not include the `.catkey` file extension. A catkey can also be defined by setting the environment variable `CAT_KEY_NAME` (again, without extension).
+The `catkeys` exports an object named `tls` which includes `.connect()` and `.createServer()` methods. These methods have the same signature as they do in Node's `tls` library, however an important difference is that they are `async` methods.
+
+See the node documentation for information about how to use these methods:
+
+* https://nodejs.org/api/tls.html#tls_tls_connect_options_callback
+* https://nodejs.org/api/tls.html#tls_tls_createserver_options_secureconnectionlistener
+
+#### Creating a server
 
 ```javascript
-const catkeys = require('catkeys')
+const { tls } = require('catkeys')
 
-exports = async () => {
-  const req = await catkeys.request(
-    {
-      url: 'https://secure.example.com/',
-      catkey: 'my-special-key',
-      …
-    },
-    (res) => { … }
-  )
-
-  req.write(postData)
-  req.end()
+const serve = async () => {
+  (await tls.createServer(
+    (socket) => {
+      console.log('Client connected.')
+      socket.write('Hello from CATKeys over TLS\n')
+      socket.end()
+    }
+  )).listen(1444)
 }
+
+serve()
+```
+
+#### Creating a client
+
+Ensure the `client.catkey` is present in the `catkeys` directory in the project root of the client.
+
+```javascript
+const { tls } = require('catkeys')
+
+const connect = async () => {
+  const socket = await tls.connect(
+    { host: 'localhost', port: 1444 },
+    () => {
+      socket.pipe(process.stdout)
+    }
+  )
+}
+
+connect()
 ```
 
 ## Examples
 
-Look in `./examples/` for a working example of a server and client
+The [examples/](examples/) directory contains working examples for [HTTPS](examples/https/) requests and [TLS](examples/tls/) sockets, along with examples showing how to use CATKeys with libraries such as:
 
-## Specifying a custom location for the `catkeys` directory
+- [Axios](examples/axios/)
+- [Express](examples/express/)
+- [JsonSocket](examples/json-socket/)
 
-The `catkeys` directory is located by progressing back through the filesystem from the `catkeys` directory until a `catkeys` directory is found. You can specify a directory at an alternative location by supplying a path to the directory in the env var `CAT_KEY_DIR`.
+## Configuration options
+
+### Multiple client keys
+
+Client keys are named `client` by default. To create multiple client CATKeys you will need to give them a name:
+
+```
+npx catkeys create-key --keydir catkeys --name myotherclient
+```
+
+This command will create a key named `myotherclient.catkey`.
+
+If there is more than 1 client key in a client's `catkeys` directory, you will need to be specifiy which one to use when calling `request()`, `connect()` or `createServer()` by setting the option `catKey`. Eg:
+
+```javascript
+const { https } = require('catkeys')
+
+const req = await https.request(
+  'https://localhost:8000/',
+  {
+    catKey: 'myotherclient'
+  },
+  (res) => { … }
+)
+```
+
+Alternatively you can use the env var `CAT_KEY_NAME` which is used if the `catKey` option is not provided.
+
+### Alternative `catkeys` directory
+
+If the `catkeys` directory is in another location other than the project root (or has a name other than `catkeys`), it can be specified when calling `request()`, `connect()` or `createServer()` using the option `catKeysDir`. Eg:
+
+```javascript
+(await https.createServer(
+  {
+    catKeysDir: path.resolve(__dirname, '..', 'my_catkeys_dir')
+  },
+  (req, res) => {
+    …
+  }
+)).listen(443)
+```
+
+Alternatively you can use the env var `CAT_KEYS_DIR` which is used if the `catKeysDir` option is not provided.
+
+## API
+
+### catkeys.https
+
+#### catkeys.https.createServer()
+
+Uses the same signature as Node's [https.createServer()](https://nodejs.org/api/https.html#https_https_createserver_options_requestlistener) with the following added options:
+
+#### catkeys.tls.createServer()
+
+Uses the same signature as Node's [tls.createServer()](https://nodejs.org/api/tls.html#tls_tls_createserver_options_secureconnectionlistener) with the following added options:
+
+- `catKeysDir` (string):  path to the catKeys directory if not present at `<project root>/catkeys`
+- `catCheckKeyExists` (boolean) default `false`:  whether to check that client's key is present on server before handling the request. This allows you to block clients by deleting their key from the server's `catkeys` directory
+
+#### catkeys.https.request()
+
+Uses the same signature as Node's [https.request()](https://nodejs.org/api/https.html#https_https_request_options_callback) with the following added options:
+
+#### catkeys.https.get()
+
+Uses the same signature as Node's [https.get()](https://nodejs.org/api/https.html#https_https_get_options_callback) with the following added options:
+
+#### catkeys.tls.connect()
+
+Uses the same signature as Node's [tls.connect()](https://nodejs.org/api/tls.html#tls_tls_connect_options_callback) with the following added options:
+
+Options:
+
+- `catKey` (string): name of the catkey to use (filename without `.catkey` ext)
+- `catKeysDir` (string):  path to the catKeys directory if not present at `<project root>/catkeys`
+- `catIgnoreMismatchedHostName` (boolean) default `true`: ignore mismatches between server hostname and name that was given when generating server catkey (server key must have been created with args `--server --name <hostname>`)
+
+### Command line usage
+
+Invoke cli using npx to see command line usage
+
+```
+$ npx catkeys --help
+```
+
+#### create-key
+
+```
+$ npx catkeys create-key
+```
+
+Options:
+
+- `--name, -n`: common name of client/server key
+- `--server, -s`:  generate a server key
+- `--keydir, -k`: path to catkeys dir (will search project root by default)
+
+---------
 
 ## Tests
-
 
 Run unit tests:
 
@@ -222,4 +300,4 @@ Code is released under the [MIT](LICENSE) license
 
 *Copyright 93 Million Ltd. All rights reserved*
 
-<div align="center"><img src="readme/images/93million_logo.svg" alt="93 Million Ltd. logo" height="60" /></div>
+<div align="center"><img src="docs/images/93million_logo.svg" alt="93 Million Ltd. logo" height="60" /></div>

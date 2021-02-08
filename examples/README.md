@@ -1,6 +1,6 @@
-# Example CatKeys clients and servers
+# Example CATKeys clients and servers
 
-There are several examples given showing how to use CatKeys with various libraries.
+There are several examples given showing how to use CATKeys with various libraries.
 
 Each example includes a server (`serve.js`) and client (`request.js`)
 
@@ -11,9 +11,9 @@ The directories `https` and `tls` contain basic examples and are a good place to
 
 Examples for the following libraries are included:
 
-* Axios
-* Express
-* json-socket
+* [Axios](axios/)
+* [Express](express/)
+* [JsonSocket](json-socket/)
 
 Steps:
 

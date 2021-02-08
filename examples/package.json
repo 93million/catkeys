@@ -5,12 +5,14 @@
   "main": "httpsServer.js",
   "dependencies": {
     "axios": "^0.21.1",
-    "catkeys": "^1.0.0",
+    "catkeys": "file:pack.tgz",
     "express": "^4.17.1",
     "json-socket": "^0.3.0"
   },
   "devDependencies": {},
   "scripts": {
+    "preinstall": "mv ../\"$(cd .. && npm pack 2> /dev/null)\" pack.tgz",
+    "postinstall": "rm pack.tgz",
     "request": "node request.js",
     "serve": "node serve.js"
   },

@@ -41,6 +41,7 @@ const main = async () => {
         }
       }
     )
+    .demandCommand()
     .argv
 }
 

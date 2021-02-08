@@ -25,7 +25,7 @@ const main = async () => {
           alias: 'k',
           default: await locateKeysDir(),
           description:
-            'path to catkeys directory (will locate closest if none provided)',
+            'path to catkeys dir (will search project root by default)',
           required: true
         }
       },

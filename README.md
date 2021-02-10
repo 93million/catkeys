@@ -247,7 +247,7 @@ Options:
 
 - `catKey` (string): name of the catkey to use (filename without `.catkey` ext)
 - `catKeysDir` (string):  path to the catKeys directory if not present at `<project root>/catkeys`
-- `catIgnoreMismatchedHostName` (boolean) default `true`: ignore mismatches between server hostname and name that was given when generating server catkey (server key must have been created with args `--server --name <hostname>`)
+- `catRejectMismatchedHostname` (boolean) default `false`: server hostnames can be safely ignored as validation is performed using the client key. Set this value to `true` to cause an error to be thrown when the server hostname doesn't match the common name of it's key (server key common name can be set when creating key with args `--server --name <hostname>`)
 
 ### Command line usage
 

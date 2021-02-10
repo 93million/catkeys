@@ -48,12 +48,12 @@ const main = async () => {
         req.end()
       }
     })
-    .add('cat#request-catIgnoreMismatchedHostName', {
+    .add('cat#request-catRejectMismatchedHostname', {
       defer: true,
       fn: async (deferred) => {
         const req = await catHttps.request(
           {
-            catIgnoreMismatchedHostName: true,
+            catRejectMismatchedHostname: false,
             catKeysDir: testCatkeysDir,
             hostname: '127.0.0.1',
             port: 45231

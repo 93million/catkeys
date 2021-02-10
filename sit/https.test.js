@@ -82,11 +82,11 @@ describe(
 
     test(
       // eslint-disable-next-line max-len
-      'should refuse to connect to mismatched hostname when catIgnoreMismatchedHostName = false',
+      'should refuse to connect to mismatched hostname when catRejectMismatchedHostname = true',
       async () => {
         await expect(testRequest({
           hostname: '127.0.0.1',
-          catIgnoreMismatchedHostName: false
+          catRejectMismatchedHostname: true
         }))
           .rejects
           .toHaveProperty('code', 'ERR_TLS_CERT_ALTNAME_INVALID')
@@ -97,7 +97,7 @@ describe(
       'should refuse to connect to servers with self signed certs',
       async () => {
         await expect(testRequest({
-          catIgnoreMismatchedHostName: true,
+          catRejectMismatchedHostname: false,
           port: 45232
         }))
           .rejects
@@ -110,7 +110,7 @@ describe(
       'should refuse to connect to servers with certs signed by supported CAs',
       async () => {
         await expect(testRequest({
-          catIgnoreMismatchedHostName: true,
+          catRejectMismatchedHostname: false,
           hostname: 'google.com',
           port: 443
         }))

@@ -6,12 +6,16 @@ const request = require('./lib/https/request')
 const catHttps = {
   createHttpsAgent,
   createServer,
-  get (...args) {
+  async get (...args) {
     const [options, _args] = getOptionsArgFromArgs(args)
 
     options.method = 'GET'
 
-    return this.request(..._args)
+    const req = await this.request(..._args)
+
+    req.end()
+
+    return req
   },
   request
 }

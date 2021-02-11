@@ -199,6 +199,8 @@ const req = await https.request(
 
 Alternatively you can use the env var `CAT_KEY_NAME` which is used if the `catKey` option is not provided.
 
+Server keys are always named `server.catkey` and it is not possible to have multiple server keys. Creating a new server key will invalidate all client keys as clients keys are created from server keys.
+
 ### Alternative `catkeys` directory
 
 If the `catkeys` directory is in another location other than the project root (or has a name other than `catkeys`), it can be specified when calling `request()`, `connect()` or `createServer()` using the option `catKeysDir`. Eg:

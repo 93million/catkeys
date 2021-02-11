@@ -9,7 +9,7 @@
 
 # CATKeys
 
-*TLS/SSL communication using client certificates for mutual authentication*
+*TLS/SSL encryption using client certificates for mutual authentication*
 
 ## What is CATKeys?
 

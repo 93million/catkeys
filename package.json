@@ -2,7 +2,7 @@
   "name": "catkeys",
   "version": "1.0.0",
   "bin": "./cli.js",
-  "description": "TLS/SSL communication using client certificates for mutual authentication",
+  "description": "TLS/SSL encryption using client certificates for mutual authentication",
   "main": "catkeys.js",
   "repository": "https://github.com/93million/catkeys",
   "directories": {

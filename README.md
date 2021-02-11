@@ -183,7 +183,7 @@ npx catkeys create-key --keydir catkeys --name myotherclient
 
 This command will create a key named `myotherclient.catkey`.
 
-If there is more than 1 client key in a client's `catkeys` directory, you will need to be specifiy which one to use when calling `request()`, `connect()` or `createServer()` by setting the option `catKey`. Eg:
+If there is more than 1 client key in a client's `catkeys` directory, you will need to be specifiy which one to use when calling `request()` or `connect()` by setting the option `catKey`. Eg:
 
 ```javascript
 const { https } = require('catkeys')

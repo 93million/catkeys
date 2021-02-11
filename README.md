@@ -19,7 +19,7 @@ Mutual authentication means that clients will only connect to valid servers; whi
 
 The complexities of generating private keys, certificates and CAs are taken care of by simple commands. Keys are packaged as single files that can be easily placed on a client in order to grant access to a server.
 
-Generate server and client keys, then use this library as a drop in replacement anywhere you have used `https.createServer`, `https.request()`, `tls.createServer()` or `tls.connect()`.
+Generate server and client keys, then use this library as a drop in replacement anywhere you have used `https.createServer()`, `https.request()`, `tls.createServer()` or `tls.connect()`.
 
 CATKeys is open source under the MIT license and has good coverage with unit tests and integration tests.
 

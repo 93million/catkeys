@@ -13,7 +13,7 @@
 
 ## What is CATKeys?
 
-CATKeys is a [Node.JS](https://nodejs.org/) library. It is an implementation of TLS/SSL client certificates for mutual authentication. It is useful when you want to guarantee that only authenticated clients can communicate with a server using HTTPS or a TLS connection.
+CATKeys is a [Node.JS](https://nodejs.org/) library. It is an implementation of TLS/SSL client certificates for mutual authentication. It is useful when you want to guarantee that only authenticated clients can communicate with a server using HTTPS or a TLS connection, to protect things like private web services only intended for use by privilledged clients.
 
 Mutual authentication means that clients will only connect to valid servers; while servers will only allow valid clients to connect. Authentication takes place in the TLS/SSL protocol and is invisible to your codebase. This means there is no authentication to handle as a developer - if you are receiving the request then both the server and client have been validated by each other.
 

@@ -3,6 +3,7 @@
 const locateKeysDir = require('./lib/locateKeysDir')
 const createKey = require('./lib/createKey')
 const yargs = require('yargs')
+const config = require('./config')
 
 const main = async () => {
   // eslint-disable-next-line no-unused-expressions
@@ -34,10 +35,17 @@ const main = async () => {
           await createKey({
             server: argv.server,
             keydir: argv.keydir,
-            commonName: argv.name || (argv.server ? 'localhost' : 'client')
+            commonName: (
+              argv.name ||
+              (
+                argv.server
+                  ? config.server.defaultCommonName
+                  : config.client.defaultCommonName
+              )
+            )
           })
         } catch (e) {
-          console.error('Failed to create key', e)
+          console.error('Failed to create key:', e.message)
         }
       }
     )

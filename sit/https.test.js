@@ -2,6 +2,7 @@
 
 const https = require('https')
 const {
+  testCatkeysClientServerSwapDir,
   testCatkeysDir2,
   testLegacyCahkeysDir,
   testClientOnlyCatkeysDir
@@ -126,6 +127,18 @@ describe(
           port: 45235,
           catKeysDir: testLegacyCahkeysDir
         })).resolves.toBe(200)
+      }
+    )
+
+    test(
+      'should refuse to connect to server running client keys',
+      async () => {
+        await expect(testRequest({
+          port: 45237,
+          catKeysDir: testCatkeysClientServerSwapDir
+        }))
+          .rejects
+          .toHaveProperty('code', 'ERR_TLS_CERT_ALTNAME_INVALID')
       }
     )
   }

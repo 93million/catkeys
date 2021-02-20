@@ -9,6 +9,7 @@ const path = require('path')
 const fs = require('fs')
 const createHttpsCert = require('../../lib/createKey/createHttpsCert')
 
+const copyFile = promisify(fs.copyFile)
 const execFile = promisify(childProcess.execFile)
 const readFile = promisify(fs.readFile)
 const rename = promisify(fs.rename)
@@ -16,6 +17,7 @@ const rename = promisify(fs.rename)
 const {
   cliCmd,
   testDir,
+  testCatkeysClientServerSwapDir,
   testCatkeysDir,
   testCatkeysDir2,
   testClientOnlyCatkeysDir,
@@ -26,6 +28,7 @@ const {
 module.exports = async () => {
   await fse.emptyDir(testDir)
   await fse.mkdir(testClientOnlyCatkeysDir)
+  await fse.mkdir(testCatkeysClientServerSwapDir)
 
   await execFile(
     'node',
@@ -62,6 +65,14 @@ module.exports = async () => {
     path.resolve(testCatkeysDir, 'clientonly.catkey'),
     path.resolve(testClientOnlyCatkeysDir, 'clientonly.catkey')
   )
+  await copyFile(
+    path.resolve(testCatkeysDir, 'client.catkey'),
+    path.resolve(testCatkeysClientServerSwapDir, 'server.catkey')
+  )
+  await copyFile(
+    path.resolve(testCatkeysDir, 'client.catkey'),
+    path.resolve(testCatkeysClientServerSwapDir, 'client.catkey')
+  )
 
   const stopServers = []
 
@@ -80,6 +91,10 @@ module.exports = async () => {
   stopServers.push(await startCatHttpsServer({
     catKeysDir: testLegacyCahkeysDir,
     port: 45235
+  }))
+  stopServers.push(await startCatHttpsServer({
+    catKeysDir: testCatkeysClientServerSwapDir,
+    port: 45237
   }))
   await createHttpsCert({ keydir: testSSLKeysDir, commonName: 'localhost' })
   const selfSignedTlsCertOptions = {

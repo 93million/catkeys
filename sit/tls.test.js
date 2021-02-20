@@ -2,7 +2,11 @@
 
 const tls = require('tls')
 const testConnect = require('./lib/tls/testConnect')
-const { testCatkeysDir2, testClientOnlyCatkeysDir } = require('./filepaths')
+const {
+  testCatkeysClientServerSwapDir,
+  testCatkeysDir2,
+  testClientOnlyCatkeysDir
+} = require('./filepaths')
 
 describe(
   'CAT TLS Server',
@@ -126,6 +130,18 @@ describe(
         }))
           .rejects
           .toHaveProperty('code', 'UNABLE_TO_GET_ISSUER_CERT_LOCALLY')
+      }
+    )
+
+    test(
+      'should refuse to connect to server running client keys',
+      async () => {
+        await expect(testConnect({
+          port: 45237,
+          catKeysDir: testCatkeysClientServerSwapDir
+        }))
+          .rejects
+          .toHaveProperty('code', 'ERR_TLS_CERT_ALTNAME_INVALID')
       }
     )
   }

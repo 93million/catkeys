@@ -37,7 +37,7 @@ const main = async () => {
             commonName: argv.name || (argv.server ? 'localhost' : 'client')
           })
         } catch (e) {
-          console.error('Failed to create key', e)
+          console.error('Failed to create key:', e.message)
         }
       }
     )

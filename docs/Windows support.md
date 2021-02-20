@@ -2,9 +2,9 @@
 
 CATKeys has been tested in Windows 10 running in Node 12.16.2.
 
-OpenSSL must be required and available in the PATH.
+OpenSSL must be installed and available in the PATH.
 
-OpenSSL can be installed using (Chocolately)[https://chocolatey.org/]. After installing Chocolatey, run the command:
+OpenSSL can be installed using [Chocolately](https://chocolatey.org/). After installing Chocolatey, run the command:
 
 ```
 choco install openssl

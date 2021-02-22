@@ -13,6 +13,7 @@ const testCatkeysClientServerSwapDir = path.resolve(
   'clientserverswapcatkeys'
 )
 const testSSLKeysDir = path.resolve(testDir, 'ssl')
+const testCatkeysExtractionDir = path.resolve(testDir, 'extract')
 
 module.exports = {
   binDir,
@@ -21,6 +22,7 @@ module.exports = {
   testCatkeysClientServerSwapDir,
   testCatkeysDir,
   testCatkeysDir2,
+  testCatkeysExtractionDir,
   testClientOnlyCatkeysDir,
   testLegacyCahkeysDir,
   testSSLKeysDir

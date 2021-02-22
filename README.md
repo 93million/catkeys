@@ -218,6 +218,12 @@ If the `catkeys` directory is in another location other than the project root (o
 
 Alternatively you can use the env var `CAT_KEYS_DIR` which is used if the `catKeysDir` option is not provided.
 
+## Using CATKeys with servers other than Node
+
+CATKeys archives can be extracted so that administrators can gain access to the certificates and keys required to secure servers that are not running Node (such as Nginx and Tomcat). This can be useful if you are not running Node on the server, or if another server is being used to terminate TLS and proxy the request to Node.
+
+See the document [using keys with other servers](./docs/Using%20keys%20with%20other%20servers.md) for information on how to use CATKeys with other servers.
+
 ## API
 
 ### catkeys.https
@@ -270,6 +276,18 @@ Options:
 - `--name, -n`: common name of client/server key
 - `--server, -s`:  generate a server key
 - `--keydir, -k`: path to catkeys dir (will search project root by default)
+
+
+#### extract-key
+
+```
+$ npx catkeys extract-key [path]
+```
+
+Options:
+
+- `[path]`: path to key file
+- `--output-dir, -o`: path to the directory to output the key files
 
 ---------
 

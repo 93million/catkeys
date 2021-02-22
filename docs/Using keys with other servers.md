@@ -37,8 +37,6 @@ Nginx must be configured to request ssl client certificates using the following 
 
 An example of using CATKeys with Nginx for TLS termination is provided at [examples/nginx-catkeys](/examples/nginx-catkeys).
 
-Please follow the [README.md](examples/nginx-catkeys/README.md) for information on how to see the example in action.
-
 ## Missing fuctionality - restricting client access
 
 When using Node to handle the TLS request, you can restrict access to clients whose keys are exist in the server's `catkeys` directory by passing the option `catCheckKeyExists: true` to CATKey's `createServer()` methods.

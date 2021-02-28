@@ -30,6 +30,12 @@ const main = async () => {
           default: false,
           description: 'generate a server key'
         },
+        update: {
+          alias: 'u',
+          boolean: true,
+          default: false,
+          description: 'update server key (client keys remain valid)'
+        },
         keydir: {
           alias: 'k',
           default: await locateKeysDir(),
@@ -42,6 +48,7 @@ const main = async () => {
         try {
           await createKey({
             server: argv.server,
+            updateServer: argv.update,
             keydir: argv.keydir,
             commonName: (
               argv.name ||

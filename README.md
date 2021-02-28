@@ -56,6 +56,8 @@ npx catkeys create-key --server --keydir catkeys
 npx catkeys create-key --keydir catkeys
 ```
 
+> ⚠️ Creating a new server key will invalidate all client keys as clients keys are created from server keys. Server keys can be updated (using `create-key --server --update`) so that client keys remain valid.
+
 Take a look in your `catkeys` directory - you will now see `client.catkey` and `server.catkey`
 
 ```
@@ -199,7 +201,7 @@ const req = await https.request(
 
 Alternatively you can use the env var `CAT_KEY_NAME` which is used if the `catKey` option is not provided.
 
-Server keys are always named `server.catkey` and it is not possible to have multiple server keys. Creating a new server key will invalidate all client keys as clients keys are created from server keys.
+Server keys are always named `server.catkey` and it is not possible to have multiple server keys.
 
 ### Alternative `catkeys` directory
 
@@ -274,7 +276,8 @@ $ npx catkeys create-key
 Options:
 
 - `--name, -n`: common name of client/server key
-- `--server, -s`:  generate a server key
+- `--server, -s`: generate a server key
+- `--update, -u`: update server key (client keys remain valid)
 - `--keydir, -k`: path to catkeys dir (will search project root by default)
 
 

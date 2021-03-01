@@ -5,7 +5,8 @@ const {
   testCatkeysClientServerSwapDir,
   testCatkeysDir2,
   testLegacyCahkeysDir,
-  testClientOnlyCatkeysDir
+  testClientOnlyCatkeysDir,
+  testUpdatedServerKeyCatkeysDir
 } = require('./filepaths')
 const testRequest = require('./lib/https/testRequest')
 
@@ -139,6 +140,18 @@ describe(
         }))
           .rejects
           .toHaveProperty('code', 'ERR_TLS_CERT_ALTNAME_INVALID')
+      }
+    )
+
+    test(
+      'should be able to connect to servers with updated server keys',
+      async () => {
+        await expect(testRequest({
+          port: 45238,
+          catKeysDir: testUpdatedServerKeyCatkeysDir
+        }))
+          .resolves
+          .toBe(200)
       }
     )
   }

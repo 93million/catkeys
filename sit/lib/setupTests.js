@@ -22,7 +22,8 @@ const {
   testCatkeysDir2,
   testClientOnlyCatkeysDir,
   testLegacyCahkeysDir,
-  testSSLKeysDir
+  testSSLKeysDir,
+  testUpdatedServerKeyCatkeysDir
 } = require('../filepaths')
 
 module.exports = async () => {
@@ -51,6 +52,19 @@ module.exports = async () => {
   await execFile(
     'node',
     [cliCmd, 'create-key', '--keydir', testLegacyCahkeysDir]
+  )
+
+  await execFile(
+    'node',
+    [cliCmd, 'create-key', '-s', '--k', testUpdatedServerKeyCatkeysDir]
+  )
+  await execFile(
+    'node',
+    [cliCmd, 'create-key', '-k', testUpdatedServerKeyCatkeysDir]
+  )
+  await execFile(
+    'node',
+    [cliCmd, 'create-key', '-s', '-u', '-k', testUpdatedServerKeyCatkeysDir]
   )
 
   await rename(
@@ -95,6 +109,10 @@ module.exports = async () => {
   stopServers.push(await startCatHttpsServer({
     catKeysDir: testCatkeysClientServerSwapDir,
     port: 45237
+  }))
+  stopServers.push(await startCatHttpsServer({
+    catKeysDir: testUpdatedServerKeyCatkeysDir,
+    port: 45238
   }))
   await createHttpsCert({ keydir: testSSLKeysDir, commonName: 'localhost' })
   const selfSignedTlsCertOptions = {

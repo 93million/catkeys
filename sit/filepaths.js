@@ -8,6 +8,10 @@ const testLegacyCahkeysDir = path.resolve(testDir, 'cahkeys')
 const testCatkeysDir = path.resolve(testDir, 'catkeys')
 const testCatkeysDir2 = path.resolve(testDir, 'catkeys2')
 const testClientOnlyCatkeysDir = path.resolve(testDir, 'clientonlycatkeys')
+const testUpdatedServerKeyCatkeysDir = path.resolve(
+  testDir,
+  'updatedservercatkeys'
+)
 const testCatkeysClientServerSwapDir = path.resolve(
   testDir,
   'clientserverswapcatkeys'
@@ -25,5 +29,6 @@ module.exports = {
   testCatkeysExtractionDir,
   testClientOnlyCatkeysDir,
   testLegacyCahkeysDir,
-  testSSLKeysDir
+  testSSLKeysDir,
+  testUpdatedServerKeyCatkeysDir
 }

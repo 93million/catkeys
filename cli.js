@@ -30,6 +30,12 @@ const main = async () => {
           default: false,
           description: 'generate a server key'
         },
+        force: {
+          alias: 'f',
+          boolean: true,
+          default: false,
+          description: 'force overwrite an exisiting server key'
+        },
         update: {
           alias: 'u',
           boolean: true,
@@ -49,6 +55,7 @@ const main = async () => {
           await createKey({
             server: argv.server,
             updateServer: argv.update,
+            force: argv.force,
             keydir: argv.keydir,
             commonName: (
               argv.name ||

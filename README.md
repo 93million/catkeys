@@ -277,6 +277,7 @@ Options:
 
 - `--name, -n`: common name of client/server key
 - `--server, -s`: generate a server key
+- `--force, -f`: overwrite existing server keys when creating (will invalidate client keys)
 - `--update, -u`: update server key (client keys remain valid)
 - `--keydir, -k`: path to catkeys dir (will search project root by default)
 

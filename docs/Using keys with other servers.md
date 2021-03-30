@@ -28,9 +28,10 @@ Nginx must be configured to request ssl client certificates using the following 
 ```
   server {
     …
-    ssl_certificate      /path/to/server/crt.pem;
+    ssl_certificate /path/to/server/crt.pem;
     ssl_certificate_key /path/to/server/key.pem;
     ssl_client_certificate /path/to/server/ca-crt.pem;
+    ssl_verify_client on;
     …
   }
 ```

@@ -9,6 +9,7 @@ const path = require('path')
 const fileExists = require('./lib/fileExists')
 const fs = require('fs')
 const { promisify } = require('util')
+const revokeKey = require('./lib/createKey/revokeKey')
 
 const mkdir = promisify(fs.mkdir)
 const rmdir = promisify(fs.rmdir)
@@ -118,6 +119,34 @@ const main = async () => {
           if (!outputDirExists) {
             await rmdir(outputDir)
           }
+        }
+      }
+    )
+    .command(
+      'revoke-key',
+      'revoke a client key',
+      {
+        name: {
+          alias: 'n',
+          description: 'common name of client/server key',
+          required: true
+        },
+        keydir: {
+          alias: 'k',
+          default: await locateKeysDir(),
+          description:
+            'path to catkeys dir (will search project root by default)',
+          required: true
+        }
+      },
+      async (argv) => {
+        try {
+          await revokeKey({
+            keydir: argv.keydir,
+            name: argv.name
+          })
+        } catch (e) {
+          console.error('Failed to create key:', e.message)
         }
       }
     )

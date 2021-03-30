@@ -165,6 +165,39 @@ const connect = async () => {
 connect()
 ```
 
+### Revoking access to a client
+
+There are 2 ways to revoke access to a client.
+
+#### Revoking client keys that you have access to
+
+If you still have access to the client key that you want to revoke in your `catkeys` directory, you can revoke the key using the `revoke-key` cli command.
+
+For example, if you created a key named `client-to-revoke` like this:
+
+```
+npx catkeys create-key --keydir catkeys --name client-to-revoke
+```
+
+then you can revoke it like this:
+
+```
+npx catkeys revoke-key --keydir catkeys --name client-to-revoke
+```
+
+#### Revoking client keys that you no longer have access to
+
+If you no longer have access to the client key that you want to revoke in your `catkeys` directory, you can effectively revoke it by limiting access to only the keys that exist in the `catkeys` directory, by passing the option `catCheckKeyExists: true` when calling `createServer()`:
+
+```javascript
+(await https.createServer(
+  { catCheckKeyExists: true },
+  (req, res) => {
+    …
+  }
+)).listen(8000)
+```
+
 ## Examples
 
 The [examples/](examples/) directory contains working examples for [HTTPS](examples/https/) requests and [TLS](examples/tls/) sockets, along with examples showing how to use CATKeys with libraries such as:

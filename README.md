@@ -1,9 +1,5 @@
-<div align="right">
-  <img src="docs/images/93million_logo.svg" alt="93 Million Ltd. logo" height="36" />
-</div>
-<div align="center">
-  <img src="docs/images/catkeys_logo.svg" alt="CATKeys logo" height="270" />
-</div>
+<div align="right"><img src="docs/images/93million_logo.svg" alt="93 Million Ltd. logo" height="36" /></div>
+<div align="center"><img src="docs/images/catkeys_logo.svg" alt="CATKeys logo" height="270" /></div><br />
 
 ![Node.js CI](https://github.com/93million/catkeys/workflows/Node.js%20CI/badge.svg)
 

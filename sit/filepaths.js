@@ -1,7 +1,7 @@
 const path = require('path')
 
 const sitDir = path.resolve(__dirname)
-const cliCmd = path.resolve(sitDir, '..', 'cli.js')
+const cliCmd = path.resolve(sitDir, '..', 'cli', 'cli.js')
 const binDir = path.resolve(sitDir, 'bin')
 const testDir = path.resolve(sitDir, 'test')
 const testLegacyCahkeysDir = path.resolve(testDir, 'cahkeys')

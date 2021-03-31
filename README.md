@@ -1,9 +1,5 @@
-<div align="right">
-  <img src="docs/images/93million_logo.svg" alt="93 Million Ltd. logo" height="36" />
-</div>
-<div align="center">
-  <img src="docs/images/catkeys_logo.svg" alt="CATKeys logo" height="270" />
-</div>
+<div align="right"><img src="docs/images/93million_logo.svg" alt="93 Million Ltd. logo" height="36" /></div>
+<div align="center"><img src="docs/images/catkeys_logo.svg" alt="CATKeys logo" height="270" /></div><br />
 
 ![Node.js CI](https://github.com/93million/catkeys/workflows/Node.js%20CI/badge.svg)
 
@@ -163,6 +159,39 @@ const connect = async () => {
 }
 
 connect()
+```
+
+### Revoking access to a client
+
+There are 2 ways to revoke access to a client.
+
+#### Revoking client keys that you have access to
+
+If you still have access to the client key that you want to revoke in your `catkeys` directory, you can revoke the key using the `revoke-key` cli command.
+
+For example, if you created a key named `client-to-revoke` like this:
+
+```
+npx catkeys create-key --keydir catkeys --name client-to-revoke
+```
+
+then you can revoke it like this:
+
+```
+npx catkeys revoke-key --keydir catkeys --name client-to-revoke
+```
+
+#### Revoking client keys that you no longer have access to
+
+If you no longer have access to the client key that you want to revoke in your `catkeys` directory, you can effectively revoke it by limiting access to only the keys that exist in the `catkeys` directory, by passing the option `catCheckKeyExists: true` when calling `createServer()`:
+
+```javascript
+(await https.createServer(
+  { catCheckKeyExists: true },
+  (req, res) => {
+    …
+  }
+)).listen(8000)
 ```
 
 ## Examples

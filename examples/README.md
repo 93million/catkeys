@@ -30,5 +30,5 @@ Eg:
 
 ```
 $ node https/request.js
-Data received: Hello from Catkeys client!
+Data received: Hello from CATKeys over HTTPS!
 ```

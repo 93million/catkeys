@@ -75,6 +75,27 @@
               "PATH": "C:\\ProgramData\\chocolatey\\bin;"
             }
           }
+        },
+        {
+          "type": "node",
+          "request": "launch",
+          "name": "Revoke client key",
+          "args": [
+            "${workspaceFolder}/cli.js",
+            "revoke-key",
+            "-n",
+            "client",
+            "-k",
+            "${workspaceFolder}/catkeys"
+          ],
+          "console": "integratedTerminal",
+          "internalConsoleOptions": "neverOpen",
+          "disableOptimisticBPs": true,
+          "windows": {
+            "env": {
+              "PATH": "C:\\ProgramData\\chocolatey\\bin;"
+            }
+          }
         }
     ]
 }

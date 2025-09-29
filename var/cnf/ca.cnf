@@ -26,6 +26,8 @@ organizationalUnitName = catkeys
 commonName             = catkeys
 emailAddress           = catkeygen@93m.org
 
-
 [ req_attributes ]
 challengePassword      = test
+
+[ v3_ca ]
+keyUsage = keyCertSign

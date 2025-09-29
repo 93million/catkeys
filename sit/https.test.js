@@ -31,7 +31,9 @@ describe(
           req.end()
         })
 
-        await expect(request()).rejects.toHaveProperty('code', 'ECONNRESET')
+        await expect(request())
+          .rejects
+          .toHaveProperty('code', 'ERR_SSL_TLSV13_ALERT_CERTIFICATE_REQUIRED')
       }
     )
 
@@ -103,7 +105,7 @@ describe(
           port: 45232
         }))
           .rejects
-          .toHaveProperty('code', 'CERT_SIGNATURE_FAILURE')
+          .toHaveProperty('code', 'INVALID_PURPOSE')
       }
     )
 
@@ -139,7 +141,7 @@ describe(
           catKeysDir: testCatkeysClientServerSwapDir
         }))
           .rejects
-          .toHaveProperty('code', 'ERR_TLS_CERT_ALTNAME_INVALID')
+          .toHaveProperty('code', 'INVALID_PURPOSE')
       }
     )
 

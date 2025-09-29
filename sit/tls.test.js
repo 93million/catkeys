@@ -53,7 +53,7 @@ describe(
           rejectUnauthorized: false
         }))
           .rejects
-          .toBe('CERT_SIGNATURE_FAILURE')
+          .toBe('SELF_SIGNED_CERT_IN_CHAIN')
       }
     )
 
@@ -114,7 +114,7 @@ describe(
           port: 45234
         }))
           .rejects
-          .toHaveProperty('code', 'CERT_SIGNATURE_FAILURE')
+          .toHaveProperty('code', 'INVALID_PURPOSE')
       }
     )
 
@@ -141,7 +141,7 @@ describe(
           catKeysDir: testCatkeysClientServerSwapDir
         }))
           .rejects
-          .toHaveProperty('code', 'ERR_TLS_CERT_ALTNAME_INVALID')
+          .toHaveProperty('code', 'INVALID_PURPOSE')
       }
     )
   }

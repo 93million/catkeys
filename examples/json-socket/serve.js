@@ -11,7 +11,7 @@ const serve = async () => {
     socket.on('message', function (message) {
       const result = message.a + message.b
 
-      socket.sendEndMessage({ result: result })
+      socket.sendEndMessage({ result })
     })
   })
 }

@@ -17,7 +17,7 @@ test(
   async () => {
     await https.get(url, opts, callback)
 
-    expect(request).toBeCalledWith(url, { method: 'GET' }, callback)
+    expect(request).toHaveBeenCalledWith(url, { method: 'GET' }, callback)
   }
 )
 
@@ -26,6 +26,6 @@ test(
   async () => {
     await https.get(url, opts, callback)
 
-    expect(end).toBeCalledTimes(1)
+    expect(end).toHaveBeenCalledTimes(1)
   }
 )

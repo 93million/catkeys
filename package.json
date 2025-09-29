@@ -44,9 +44,6 @@
   "engines": {
     "node": ">=20.17"
   },
-  "jest": {
-    "testEnvironment": "node"
-  },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"

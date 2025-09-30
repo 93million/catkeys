@@ -5,7 +5,7 @@
   "main": "httpsServer.js",
   "dependencies": {
     "axios": "^0.21.1",
-    "catkeys": "file:pack.tgz",
+    "catkeys": "^1.4.0",
     "express": "^4.17.1",
     "json-socket": "^0.3.0"
   },

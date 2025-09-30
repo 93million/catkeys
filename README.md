@@ -26,7 +26,7 @@ All commands must be run from your project root that contains your `package.json
 ### Requirements
 
  - OpenSSL (which is included in most distributions). [See here](docs/Windows%20support.md) for instructions installing OpenSSL on Windows.
- - Node v12 or later
+ - Node v20 or later
 
 ### Installing CATKeys
 

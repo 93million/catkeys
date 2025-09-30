@@ -15,9 +15,9 @@ module.exports = {
     ecmaVersion: 2018
   },
   rules: {
-    'max-len': ['error', { 'code': 80 }],
+    'max-len': ['error', { code: 80 }],
     'padding-line-between-statements': [
-      "error",
+      'error',
       {
         blankLine: 'always',
         prev: ['const', 'let', 'var'],

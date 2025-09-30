@@ -1,0 +1,13 @@
+[server]
+basicConstraints        = critical, CA:FALSE
+subjectKeyIdentifier    = hash
+authorityKeyIdentifier  = keyid:always, issuer:always
+keyUsage                = critical, digitalSignature, keyEncipherment, keyAgreement
+extendedKeyUsage        = critical, serverAuth
+
+[client]
+basicConstraints        = critical, CA:FALSE
+subjectKeyIdentifier    = hash
+authorityKeyIdentifier  = keyid:always, issuer:always
+keyUsage                = critical, digitalSignature, keyEncipherment
+extendedKeyUsage        = critical, clientAuth

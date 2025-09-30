@@ -1,6 +1,5 @@
 .DS_Store
 node_modules
-package-lock.json
 /coverage
 /examples/catkeys
 /examples/nginx-catkeys/nginx.pid

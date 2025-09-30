@@ -1,6 +1,6 @@
 {
   "name": "catkeys",
-  "version": "1.4.0",
+  "version": "2.0.0",
   "bin": "./cli/cli.js",
   "description": "TLS/SSL encryption using client certificates for mutual authentication",
   "main": "catkeys.js",
